@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Grid, Row, Col, Button, FormGroup, InputGroup, FormControl } from 'react-bootstrap';
+import { Grid, Row, Col, Button, FormGroup, InputGroup, FormControl, Alert } from 'react-bootstrap';
 
-import { navigateAbout, navigateQuery } from '../actions/index';
+import { sendMessage } from '../actions/index';
 
 class Home extends React.Component {
   constructor(props) {
@@ -22,37 +22,32 @@ class Home extends React.Component {
         <Row>
           <Col xs={12} sm={6} smOffset={3}>
             <div className="text-center">
-              <h2>Home</h2>
+              <h2>Send anonymous sms messages to anyone in Australia</h2>
               <br/><br/>
               <div>
-                <form>
+                {this.props.smsSent ? null : <form>
                   <FormGroup>
                     <InputGroup>
-                      <InputGroup.Addon>Query</InputGroup.Addon>
+                      <InputGroup.Addon>Msg:</InputGroup.Addon>
                       <FormControl
                         type="text"
                         value={this.state.value}
-                        placeholder="Enter a string"
+                        placeholder="Your message"
                         onChange={this.handleChange.bind(this)}
                       />
-                      <InputGroup.Button>
-                        <Button
-                          onClick={() => this.props.dispatch(navigateQuery(this.state.value))}
-                        >
-                          Go
-                        </Button>
-                      </InputGroup.Button>
                     </InputGroup>
+                    <br/><br/>
+                    <Button
+                      onClick={() => this.props.dispatch(sendMessage(this.state.value))}
+                    >
+                      Send msg
+                    </Button>
                   </FormGroup>
-                </form>
-              </div>
-              <br/><br/>
-              <div>
-                <Button
-                  onClick={() => this.props.dispatch(navigateAbout())}
-                >
-                  About
-                </Button>
+                </form>}
+                {this.props.smsSent ?
+                  <Alert bsStyle="success"><strong>Message sent</strong></Alert>
+                  : null
+                }
               </div>
             </div>
           </Col>
@@ -62,4 +57,10 @@ class Home extends React.Component {
   }
 }
 
-export default connect()(Home);
+function mapStateToProps(state) {
+  return {
+    smsSent: state.rootReducer.sms.smsSent
+  }
+}
+
+export default connect(mapStateToProps, null)(Home);

@@ -1,7 +1,7 @@
 {
-  "name": "react-redux-boiler",
-  "version": "0.2.0",
-  "description": "Simple React Redux app boilerplate",
+  "name": "anon-texts",
+  "version": "0.1.0",
+  "description": "Send anonymous sms messages to anyone in Australia",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server -d --progress --inline --port 9999",
