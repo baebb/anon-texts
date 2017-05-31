@@ -8,20 +8,20 @@ import chaiEnzyme from 'chai-enzyme'
 
 chai.use(chaiEnzyme());
 
-import Query from '../../src/containers/query';
+import Send from '../../src/containers/send';
 
 const middlewares = [thunk];
 const mockStore = configureStore(middlewares);
 
-describe('Query', () => {
+describe('Send', () => {
   let component, store;
   
   beforeEach(() => {
     store = mockStore({
       router: {
-        query: {
-          string: 'testcat'
-        }
+        // query: {
+        //   string: 'testcat'
+        // }
       }
     });
     // this doesn't work

@@ -11,8 +11,8 @@ const routes = {
   '/about': {
     title: 'About'
   },
-  '/query': {
-    title: 'Query'
+  '/send': {
+    title: 'Send'
   }
 };
 
