@@ -2,7 +2,7 @@ import React from 'react';
 import { Fragment } from 'redux-little-router';
 
 import About from './containers/about';
-import Query from './containers/send';
+import Send from './containers/send';
 import Home from './containers/home';
 
 class App extends React.Component {
@@ -10,10 +10,10 @@ class App extends React.Component {
     return (
       <Fragment forRoute='/'>
         <div className="App">
-          <h1 className="text-center">anon texts</h1>
+          <h1 className="text-center title">anon texts</h1>
           <Fragment forRoute='/'><Home /></Fragment>
           <Fragment forRoute='/about'><About /></Fragment>
-          <Fragment forRoute='/query'><Query /></Fragment>
+          <Fragment forRoute='/send'><Send /></Fragment>
         </div>
       </Fragment>
     );

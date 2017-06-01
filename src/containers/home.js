@@ -2,16 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Grid, Row, Col } from 'react-bootstrap';
 
+import NumberField from '../components/number_field';
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: ''
+      number: ''
     }
   }
   
   handleChange(e) {
-    this.setState({ ...this.state, value: e.target.value });
+    this.setState({ ...this.state, number: e.target.value });
   }
   
   render() {
@@ -22,6 +24,10 @@ class Home extends React.Component {
             <div className="text-center">
               <h2>Send anonymous sms messages to anyone in Australia</h2>
               <br/><br/>
+              <NumberField
+                number={this.state.number}
+                handleChange={this.handleChange.bind(this)}
+              />
             </div>
           </Col>
         </Row>
