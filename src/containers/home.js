@@ -16,8 +16,8 @@ class Home extends React.Component {
     }
   }
   
-  handleChange(e) {
-    this.setState({ ...this.state, number: e.target.value });
+  handleChange(value) {
+    this.setState({ ...this.state, number: value });
   }
   
   render() {

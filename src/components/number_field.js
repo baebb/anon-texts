@@ -10,16 +10,12 @@ const NumberField = (props) => {
     <Row>
       <Col xs={12}>
         <FormGroup>
-          {/*<FormControl*/}
-          {/*type="number"*/}
-          {/*value={props.number}*/}
-          {/*placeholder="eg. 0416 032 684"*/}
-          {/*onChange={props.handleChange}*/}
-          {/*/>*/}
           <Phone
             placeholder="Start typing a phone number"
+            countries={['AU']}
             value={props.number}
             onChange={props.handleChange}
+            className=""
           />
           <br/><br/>
           <Button
