@@ -2,7 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Grid, Row, Col } from 'react-bootstrap';
 
+// components
 import NumberField from '../components/number_field';
+
+// actions
+import { navigateSend } from '../actions/index';
 
 class Home extends React.Component {
   constructor(props) {
@@ -24,10 +28,12 @@ class Home extends React.Component {
             <div className="text-center">
               <h2>Send anonymous sms messages to anyone in Australia</h2>
               <br/><br/>
-              <NumberField
-                number={this.state.number}
-                handleChange={this.handleChange.bind(this)}
-              />
+              <form onSubmit={() => this.props.dispatch(navigateSend(this.state.number))}>
+                <NumberField
+                  number={this.state.number}
+                  handleChange={this.handleChange.bind(this)}
+                />
+              </form>
             </div>
           </Col>
         </Row>

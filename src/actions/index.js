@@ -9,9 +9,9 @@ export const
 
 const LAMBDA_ROOT_URL = 'https://dgy8gll6v4.execute-api.us-east-1.amazonaws.com/';
 
-export function navigateAbout() {
+export function navigateSend(number) {
   return (dispatch) => {
-    dispatch(push('/about'))
+    dispatch(push(`/send/${number}`))
   }
 }
 

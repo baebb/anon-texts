@@ -13,6 +13,9 @@ const routes = {
   },
   '/send': {
     title: 'Send'
+  },
+  '/send/:number': {
+    title: 'Send to:'
   }
 };
 
