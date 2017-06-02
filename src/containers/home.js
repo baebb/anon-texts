@@ -16,8 +16,13 @@ class Home extends React.Component {
     }
   }
   
-  handleChange(value) {
-    this.setState({ ...this.state, number: value });
+  isValid(e) {
+    e.preventDefault();
+    (this.state.number).length === 12 ? this.props.dispatch(navigateSend(this.state.number)) : console.log('no');
+  }
+  
+  handleChange(e) {
+    this.setState({ ...this.state, number: e.target.value });
   }
   
   render() {
@@ -28,7 +33,7 @@ class Home extends React.Component {
             <div className="text-center">
               <h2>Send anonymous sms messages to anyone in Australia</h2>
               <br/><br/>
-              <form onSubmit={() => this.props.dispatch(navigateSend(this.state.number))}>
+              <form onSubmit={(e) => this.isValid(e)}>
                 <NumberField
                   number={this.state.number}
                   handleChange={this.handleChange.bind(this)}
