@@ -52,6 +52,7 @@
     "react": "^15.5.4",
     "react-bootstrap": "^0.31.0",
     "react-dom": "^15.5.4",
+    "react-phone-number-input": "^0.11.5",
     "react-redux": "^5.0.2",
     "redux": "^3.6.0",
     "redux-little-router": "^13.1.2",
