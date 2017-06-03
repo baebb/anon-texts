@@ -26,13 +26,15 @@ export function sendError(props) {
   }
 }
 
-export function sendMessage(message) {
+export function sendMessage(number, message) {
+  const formattedNumber = `+61${number.slice(1)}`;
+  const formattedMessage = `${message}\n| anon-texts.com`;
   return (dispatch) => {
     dispatch({ type: SEND_LOADING });
     const url = `${LAMBDA_ROOT_URL}dev/send`;
     const data = {
-      to: '+61458080855',
-      message: message
+      to: formattedNumber,
+      message: formattedMessage
     };
     axios.post(url, data)
       .then((response) => {
@@ -42,25 +44,7 @@ export function sendMessage(message) {
         dispatch(sendError({ type: 'error', message: error }))
       });
   }
-  // return {
-  //   type: SEND_MSG,
-  //   payload: request
-  // }
 }
-
-export function navigateQuery(string) {
-  return (dispatch) => {
-    dispatch(
-      push({
-        pathname: `/query`,
-        query: {
-          string: string,
-        },
-      })
-    )
-  }
-}
-
 // export function storeQuery(query) {
 //   return {
 //     type: STORE_QUERY,

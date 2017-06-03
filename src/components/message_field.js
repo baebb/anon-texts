@@ -17,7 +17,7 @@ const MessageField = (props) => {
         <br/><br/>
         {!props.error ? null :
           <Alert bsStyle="danger">
-            Messages must be more than 20 and less than 140 characters (incl. spaces)
+            Messages must be more than 10 and less than 140 characters (incl. spaces)
           </Alert>
         }
         <Button type="submit">

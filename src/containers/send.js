@@ -21,16 +21,14 @@ class Send extends React.Component {
   isValidMessage(e) {
     e.preventDefault();
     const { message } = this.state;
-    if (message.length < 140 && message.length > 20) {
-      console.log('yes');
+    if (message.length < 140 && message.length > 10) {
+      this.props.dispatch(sendMessage(this.props.number,message));
     } else {
-      this.setState({ error: true })
+      this.setState({ error: true });
     }
-    // onClick={() => this.props.dispatch(sendMessage(this.state.value))}
   }
   
   handleChange(e) {
-    console.log(this.state.message);
     this.setState({ message: e.target.value, error: false });
   }
   
