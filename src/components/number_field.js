@@ -8,7 +8,7 @@ import { Row, Col, FormGroup, FormControl, Button, Alert } from 'react-bootstrap
 const NumberField = (props) => {
   return (
     <Row>
-      <Col xs={12}>
+      <Col xs={12} sm={6} smOffset={3}>
         <FormGroup>
           <FormControl
             type="number"

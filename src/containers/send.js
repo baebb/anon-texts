@@ -40,7 +40,7 @@ class Send extends React.Component {
         <Row>
           <Col xs={12} sm={6} smOffset={3}>
             <div className="text-center">
-              <h2>Send a sms to:</h2>
+              <h2>Send sms to:</h2>
               <h2>{this.props.number}</h2>
               <br/><br/>
               <div>

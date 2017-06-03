@@ -4,23 +4,28 @@ import { Row, Col, FormGroup, FormControl, Button, Alert } from 'react-bootstrap
 
 const MessageField = (props) => {
   return (
-    <FormGroup>
-      <FormControl
-        type="text"
-        value={props.message}
-        placeholder="Your message"
-        onChange={props.handleChange}
-      />
-      <br/><br/>
-      {!props.error ? null :
-        <Alert bsStyle="danger">
-          Messages must be less than 20 and over 140 characters (including spaces)
-        </Alert>
-      }
-      <Button type="submit">
-        Send message
-      </Button>
-    </FormGroup>
+  <Row>
+    <Col xs={12} sm={10} smOffset={1}>
+      <FormGroup>
+        <FormControl
+          componentClass="textarea"
+          rows="4"
+          placeholder="Your message"
+          value={props.message}
+          onChange={props.handleChange}
+        />
+        <br/><br/>
+        {!props.error ? null :
+          <Alert bsStyle="danger">
+            Messages must be more than 20 and less than 140 characters (incl. spaces)
+          </Alert>
+        }
+        <Button type="submit">
+          Send
+        </Button>
+      </FormGroup>
+    </Col>
+  </Row>
   )
 };
 
