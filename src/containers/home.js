@@ -17,7 +17,7 @@ class Home extends React.Component {
     }
   }
   
-  isValid(e) {
+  isValidNumber(e) {
     e.preventDefault();
     const { number } = this.state;
     if (number.length !== 10 || number.substring(0, 2) !== '04') {
@@ -39,7 +39,7 @@ class Home extends React.Component {
             <div className="text-center">
               <h2>Send anonymous sms messages to anyone in Australia</h2>
               <br/><br/>
-              <form onSubmit={(e) => this.isValid(e)}>
+              <form onSubmit={(e) => this.isValidNumber(e)}>
                 <NumberField
                   number={this.state.number}
                   handleChange={this.handleChange.bind(this)}

@@ -2,18 +2,27 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Grid, Row, Col, Button, FormGroup, InputGroup, FormControl, Alert } from 'react-bootstrap';
 
+
+// components
+import MessageField from '../components/message_field';
+
+// actions
 import { sendMessage } from '../actions/index';
 
 class Send extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: ''
+      message: ''
     }
   }
   
+  isValidMessage(e) {
+    // onClick={() => this.props.dispatch(sendMessage(this.state.value))}
+  }
+  
   handleChange(e) {
-    this.setState({ ...this.state, value: e.target.value });
+    this.setState({ message: e.target.value });
   }
   
   render() {
@@ -25,22 +34,14 @@ class Send extends React.Component {
               <h2>Send a sms to:</h2>
               <br/><br/>
               <div>
-                {this.props.smsSent ? null : <form>
-                  <FormGroup>
-                    <FormControl
-                      type="text"
-                      value={this.state.value}
-                      placeholder="Your message"
-                      onChange={this.handleChange.bind(this)}
+                {this.props.smsSent ? null :
+                  <form onSubmit={(e) => this.isValidMessage(e)}>
+                    <MessageField
+                      messsage={this.state.message}
+                      handleChange={this.handleChange.bind(this)}
                     />
-                    <br/><br/>
-                    <Button
-                      onClick={() => this.props.dispatch(sendMessage(this.state.value))}
-                    >
-                      Send msg
-                    </Button>
-                  </FormGroup>
-                </form>}
+                  </form>
+                }
                 {this.props.smsSent ?
                   <Alert bsStyle="success"><strong>Message sent</strong></Alert>
                   : null
