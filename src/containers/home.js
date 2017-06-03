@@ -12,17 +12,23 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      number: ''
+      number: '',
+      error: false
     }
   }
   
   isValid(e) {
     e.preventDefault();
-    (this.state.number).length === 12 ? this.props.dispatch(navigateSend(this.state.number)) : console.log('no');
+    const { number } = this.state;
+    if (number.length !== 10 || number.substring(0, 2) !== '04') {
+      this.setState({ error: true })
+    } else {
+      this.props.dispatch(navigateSend(number));
+    }
   }
   
   handleChange(e) {
-    this.setState({ ...this.state, number: e.target.value });
+    this.setState({ number: e.target.value });
   }
   
   render() {
@@ -37,6 +43,7 @@ class Home extends React.Component {
                 <NumberField
                   number={this.state.number}
                   handleChange={this.handleChange.bind(this)}
+                  error={this.state.error}
                 />
               </form>
             </div>

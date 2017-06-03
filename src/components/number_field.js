@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, FormGroup, FormControl, Button } from 'react-bootstrap';
+import { Row, Col, FormGroup, FormControl, Button, Alert } from 'react-bootstrap';
 // import Phone from 'react-phone-number-input';
 
 // import rrui from 'react-phone-number-input/rrui.css';
@@ -26,12 +26,16 @@ const NumberField = (props) => {
             {/*className=""*/}
           {/*/>*/}
           <br/><br/>
-          <Button
-            type="submit"
-          >
+          {!props.error ? null :
+            <Alert bsStyle="danger">
+              Only Australian mobile numbers starting with '04' are supported
+            </Alert>
+          }
+          <Button type="submit">
             Send a sms
           </Button>
         </FormGroup>
+        
       </Col>
     </Row>
   )
