@@ -13,16 +13,25 @@ class Send extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: ''
+      message: '',
+      error: false
     }
   }
   
   isValidMessage(e) {
+    e.preventDefault();
+    const { message } = this.state;
+    if (message.length < 140 && message.length > 20) {
+      console.log('yes');
+    } else {
+      this.setState({ error: true })
+    }
     // onClick={() => this.props.dispatch(sendMessage(this.state.value))}
   }
   
   handleChange(e) {
-    this.setState({ message: e.target.value });
+    console.log(this.state.message);
+    this.setState({ message: e.target.value, error: false });
   }
   
   render() {
@@ -32,19 +41,21 @@ class Send extends React.Component {
           <Col xs={12} sm={6} smOffset={3}>
             <div className="text-center">
               <h2>Send a sms to:</h2>
+              <h2>{this.props.number}</h2>
               <br/><br/>
               <div>
-                {this.props.smsSent ? null :
+                {this.props.smsSent ?
+                  <Alert bsStyle="success">
+                    <strong>Message sent</strong>
+                  </Alert>
+                  :
                   <form onSubmit={(e) => this.isValidMessage(e)}>
                     <MessageField
                       messsage={this.state.message}
                       handleChange={this.handleChange.bind(this)}
+                      error={this.state.error}
                     />
                   </form>
-                }
-                {this.props.smsSent ?
-                  <Alert bsStyle="success"><strong>Message sent</strong></Alert>
-                  : null
                 }
               </div>
             </div>
@@ -57,6 +68,7 @@ class Send extends React.Component {
 
 function mapStateToProps(state) {
   return {
+    number: state.router.params.number,
     smsSent: state.rootReducer.sms.smsSent
   }
 }

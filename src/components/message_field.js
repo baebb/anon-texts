@@ -12,8 +12,13 @@ const MessageField = (props) => {
         onChange={props.handleChange}
       />
       <br/><br/>
+      {!props.error ? null :
+        <Alert bsStyle="danger">
+          Messages must be less than 20 and over 140 characters (including spaces)
+        </Alert>
+      }
       <Button type="submit">
-        Send msg
+        Send message
       </Button>
     </FormGroup>
   )
