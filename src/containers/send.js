@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Grid, Row, Col, Button, FormGroup, InputGroup, FormControl, Alert } from 'react-bootstrap';
 
+// assets
+import LoadingGif from '../assets/loading.gif';
 
 // components
 import MessageField from '../components/message_field';
@@ -22,7 +24,7 @@ class Send extends React.Component {
     e.preventDefault();
     const { message } = this.state;
     if (message.length < 140 && message.length > 10) {
-      this.props.dispatch(sendMessage(this.props.number,message));
+      this.props.dispatch(sendMessage(this.props.number, message));
     } else {
       this.setState({ error: true });
     }
@@ -46,14 +48,21 @@ class Send extends React.Component {
                   <Alert bsStyle="success">
                     <strong>Message sent</strong>
                   </Alert>
-                  :
-                  <form onSubmit={(e) => this.isValidMessage(e)}>
-                    <MessageField
-                      messsage={this.state.message}
-                      handleChange={this.handleChange.bind(this)}
-                      error={this.state.error}
-                    />
-                  </form>
+                  : this.props.smsSending ?
+                    <Alert bsStyle="warning">
+                      <p>
+                        <img src={LoadingGif} height="20px" />
+                      </p>
+                      <p>Sending...</p>
+                    </Alert>
+                    :
+                    <form onSubmit={(e) => this.isValidMessage(e)}>
+                      <MessageField
+                        messsage={this.state.message}
+                        handleChange={this.handleChange.bind(this)}
+                        error={this.state.error}
+                      />
+                    </form>
                 }
               </div>
             </div>
@@ -67,6 +76,7 @@ class Send extends React.Component {
 function mapStateToProps(state) {
   return {
     number: state.router.params.number,
+    smsSending: state.rootReducer.sms.smsSending,
     smsSent: state.rootReducer.sms.smsSent
   }
 }
