@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Grid, Row, Col, Button, FormGroup, InputGroup, FormControl, Alert } from 'react-bootstrap';
+import { Grid, Row, Col, Alert } from 'react-bootstrap';
 
 // assets
-import LoadingGif from '../assets/loading.gif';
+import LoadingGif from '../assets/gif/loading.gif';
 
 // components
 import MessageField from '../components/message_field';
