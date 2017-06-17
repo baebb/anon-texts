@@ -31,9 +31,6 @@ const NumberField = (props) => {
               Only Australian mobile numbers starting with '04' are supported
             </Alert>
           }
-          <Button type="submit">
-            Send a sms
-          </Button>
         </FormGroup>
         
       </Col>

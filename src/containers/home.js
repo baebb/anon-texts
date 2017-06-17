@@ -42,9 +42,12 @@ class Home extends React.Component {
               <form onSubmit={(e) => this.isValidNumber(e)}>
                 <NumberField
                   number={this.state.number}
-                  handleChange={this.handleChange.bind(this)}
+                  handleChange={(e) => this.handleChange(e)}
                   error={this.state.error}
                 />
+                <Button type="submit">
+                  Send a sms
+                </Button>
               </form>
             </div>
           </Col>
