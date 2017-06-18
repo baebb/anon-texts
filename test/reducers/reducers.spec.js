@@ -2,7 +2,7 @@ import { expect } from 'chai';
 //types
 import { STORE_QUERY } from '../../src/actions/index';
 //reducers
-import queriesReducer from '../../src/reducers/reducer_queries';
+import queriesReducer from '../../src/reducers/reducer_sent_messages';
 
 const INIT_STATE = { queryStore: ['existingItem'] };
 

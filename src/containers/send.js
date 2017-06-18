@@ -9,7 +9,7 @@ import LoadingGif from '../assets/gif/loading.gif';
 import MessageField from '../components/message_field';
 
 // actions
-import { sendMessage } from '../actions/index';
+import { sendMessage, getSentMessages } from '../actions/index';
 
 class Send extends React.Component {
   constructor(props) {
@@ -18,6 +18,10 @@ class Send extends React.Component {
       message: '',
       error: false
     }
+  }
+  
+  componentWillMount() {
+    this.props.dispatch(getSentMessages(`61${this.props.number}`));
   }
   
   isValidMessage(e) {
