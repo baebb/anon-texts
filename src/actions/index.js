@@ -52,15 +52,17 @@ export function sendMessage(number, message) {
 }
 
 export function getSentMessages(number) {
-  const url = `${DB_LAMBDA_ROOT_URL}dev/sentMessages/${number}`;
+  const formattedNumber = `61${number.slice(1)}`;
+  const url = `${DB_LAMBDA_ROOT_URL}dev/sentMessages/${formattedNumber}`;
   return (dispatch) => {
     dispatch({ type: SENT_MESSAGES_LOADING });
     axios.get(url)
       .then((response) => {
-        dispatch({
-          type: SENT_MESSAGES_RECEIVED,
-          payload: response
-        })
+        response.data === '' ? dispatch({ type: SENT_MESSAGES_EMPTY }) :
+          dispatch({
+            type: SENT_MESSAGES_RECEIVED,
+            payload: response.data
+          })
       })
       .catch((error) => {
         console.log(error);

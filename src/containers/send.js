@@ -21,7 +21,7 @@ class Send extends React.Component {
   }
   
   componentWillMount() {
-    this.props.dispatch(getSentMessages(`61${this.props.number}`));
+    this.props.dispatch(getSentMessages(this.props.number));
   }
   
   isValidMessage(e) {
