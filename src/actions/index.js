@@ -65,6 +65,7 @@ export function getSentMessages(number) {
           })
       })
       .catch((error) => {
+        dispatch({ type: SENT_MESSAGES_ERROR });
         console.log(error);
       })
   }
