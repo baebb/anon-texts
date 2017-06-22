@@ -13,22 +13,24 @@ class Home extends React.Component {
     super(props);
     this.state = {
       number: '',
-      error: false
+      error: ''
     }
   }
   
   isValidNumber(e) {
     e.preventDefault();
     const { number } = this.state;
-    if (number.length !== 10 || number.substring(0, 2) !== '04') {
-      this.setState({ error: true })
+    if (number.length !== 10) {
+      this.setState({ error: 'BAD_LENGTH', number: '' });
+    } else if (number.substring(0, 2) !== '04') {
+      this.setState({ error: 'BAD_NUMBER_CODE', number: '' });
     } else {
       this.props.dispatch(navigateSend(number));
     }
   }
   
   handleChange(e) {
-    this.setState({ number: e.target.value, error: false });
+    this.setState({ number: e.target.value, error: '' });
   }
   
   render() {
