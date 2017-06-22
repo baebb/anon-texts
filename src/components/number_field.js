@@ -28,11 +28,13 @@ const NumberField = (props) => {
           <br/><br/>
           {props.error === 'BAD_LENGTH' ?
             <Alert bsStyle="danger">
-              Bad number. Only 10-digit mobile numbers are supported
+              <p><strong>Bad number</strong></p>
+              <p>Only 10-digit mobile numbers are supported</p>
             </Alert>
             : props.error === 'BAD_NUMBER_CODE' ?
               <Alert bsStyle="danger">
-                Bad number. Only Australian mobile numbers starting with '04' are supported
+                <p><strong>Bad number</strong></p>
+                <p>Only Australian mobile numbers starting with '04' are supported</p>
               </Alert>
               : null
           }
