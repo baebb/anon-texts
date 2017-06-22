@@ -15,10 +15,15 @@ const MessageField = (props) => {
           onChange={props.handleChange}
         />
         <br/><br/>
-        {!props.error ? null :
+        {props.error === 'MESSAGE_SHORT' ?
           <Alert bsStyle="danger">
-            Messages must be more than 10 and less than 140 characters (incl. spaces)
+            Bad message. Messages must be more than 10 characters (incl. spaces)
           </Alert>
+          : props.error === 'MESSAGE_LONG' ?
+            <Alert bsStyle="danger">
+              Bad message. Messages must be less than 140 characters (incl. spaces)
+            </Alert>
+            : null
         }
         <Button type="submit">
           Send

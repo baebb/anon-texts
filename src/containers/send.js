@@ -16,7 +16,7 @@ class Send extends React.Component {
     super(props);
     this.state = {
       message: '',
-      error: false
+      error: ''
     }
   }
   
@@ -27,10 +27,12 @@ class Send extends React.Component {
   isValidMessage(e) {
     e.preventDefault();
     const { message } = this.state;
-    if (message.length < 140 && message.length > 10) {
-      this.props.dispatch(sendMessage(this.props.number, message));
+    if (message.length < 10) {
+      this.setState({ error: 'MESSAGE_SHORT' });
+    } else if (message.length < 140) {
+      this.setState({ error: 'MESSAGE_LONG' });
     } else {
-      this.setState({ error: true });
+      this.props.dispatch(sendMessage(this.props.number, message));
     }
   }
   
