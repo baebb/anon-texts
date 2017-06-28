@@ -10,7 +10,7 @@ export const
   SENT_MESSAGES_EMPTY = 'SENT_MESSAGES_EMPTY',
   SENT_MESSAGES_RECEIVED = 'SENT_MESSAGES_RECEIVED';
 
-const SMS_LAMBDA_ROOT_URL = 'https://dgy8gll6v4.execute-api.us-east-1.amazonaws.com/';
+const SMS_LAMBDA_ROOT_URL = 'https://sor59zy6f2.execute-api.us-east-1.amazonaws.com/';
 const DB_LAMBDA_ROOT_URL = 'https://becqd6a376.execute-api.us-east-1.amazonaws.com/';
 
 
