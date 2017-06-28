@@ -9,7 +9,8 @@
     "build:serve": "http-server ./build -p 8079",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
     "test:watch": "npm run test -- --watch",
-    "format": "eslint --fix src/ test/ --ext js"
+    "format": "eslint --fix src/ test/ --ext js",
+    "deploy": "aws s3 rm s3://anon-texts/ --recursive && aws s3 cp build s3://anon-texts/ --recursive"
   },
   "author": "Ross Dyson iam@rossdyson.com",
   "license": "MIT",
