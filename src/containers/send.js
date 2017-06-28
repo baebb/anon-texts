@@ -1,32 +1,38 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Grid, Row, Col, Button, FormGroup, InputGroup, FormControl, Alert } from 'react-bootstrap';
+import { Grid, Row, Col, Alert } from 'react-bootstrap';
 
 // assets
-import LoadingGif from '../assets/loading.gif';
+import LoadingGif from '../assets/gif/loading.gif';
 
 // components
 import MessageField from '../components/message_field';
 
 // actions
-import { sendMessage } from '../actions/index';
+import { sendMessage, getSentMessages } from '../actions/index';
 
 class Send extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       message: '',
-      error: false
+      error: ''
     }
+  }
+  
+  componentWillMount() {
+    this.props.dispatch(getSentMessages(this.props.number));
   }
   
   isValidMessage(e) {
     e.preventDefault();
     const { message } = this.state;
-    if (message.length < 140 && message.length > 10) {
-      this.props.dispatch(sendMessage(this.props.number, message));
+    if (message.length < 10) {
+      this.setState({ error: 'MESSAGE_SHORT' });
+    } else if (message.length < 140) {
+      this.setState({ error: 'MESSAGE_LONG' });
     } else {
-      this.setState({ error: true });
+      this.props.dispatch(sendMessage(this.props.number, message));
     }
   }
   

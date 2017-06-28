@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Grid, Row, Col, Button } from 'react-bootstrap';
 
 // components
 import NumberField from '../components/number_field';
@@ -13,22 +13,24 @@ class Home extends React.Component {
     super(props);
     this.state = {
       number: '',
-      error: false
+      error: ''
     }
   }
   
   isValidNumber(e) {
     e.preventDefault();
     const { number } = this.state;
-    if (number.length !== 10 || number.substring(0, 2) !== '04') {
-      this.setState({ error: true })
+    if (number.length !== 10) {
+      this.setState({ error: 'BAD_LENGTH', number: '' });
+    } else if (number.substring(0, 2) !== '04') {
+      this.setState({ error: 'BAD_NUMBER_CODE', number: '' });
     } else {
       this.props.dispatch(navigateSend(number));
     }
   }
   
   handleChange(e) {
-    this.setState({ number: e.target.value, error: false });
+    this.setState({ number: e.target.value, error: '' });
   }
   
   render() {
@@ -42,9 +44,12 @@ class Home extends React.Component {
               <form onSubmit={(e) => this.isValidNumber(e)}>
                 <NumberField
                   number={this.state.number}
-                  handleChange={this.handleChange.bind(this)}
+                  handleChange={(e) => this.handleChange(e)}
                   error={this.state.error}
                 />
+                <Button type="submit">
+                  Send a sms
+                </Button>
               </form>
             </div>
           </Col>

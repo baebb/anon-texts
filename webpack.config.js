@@ -57,8 +57,8 @@ const rules = [
     test: /\.(jpg|gif)$/,
     loader: 'file-loader',
     options: {
-      name: 'assets/[name].[ext]',
-      context: './assets'
+      name: '[path][name]-[hash].[ext]',
+      context: appPath
     }
   },
   {
@@ -148,8 +148,8 @@ module.exports = {
   output: {
     path: buildPath,
     publicPath: '/',
-    sourceMapFilename: '[file].map',
-    filename: 'bundle.js'
+    sourceMapFilename: '[file]-[hash].map',
+    filename: 'bundle-[hash].js'
   },
   module: {
     rules
