@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Grid, Row, Col, Alert } from 'react-bootstrap';
+import { Grid, Row, Col, Button, Alert } from 'react-bootstrap';
 
 // assets
 import LoadingGif from '../assets/gif/loading.gif';
@@ -49,7 +49,7 @@ class Send extends React.Component {
               <h2>Send sms to:</h2>
               <h2>{this.props.number}</h2>
               <br/><br/>
-              <div>
+              <div className="send-box">
                 {this.props.smsSent ?
                   <Alert bsStyle="success">
                     <strong>Message sent</strong>
@@ -68,7 +68,17 @@ class Send extends React.Component {
                         handleChange={this.handleChange.bind(this)}
                         error={this.state.error}
                       />
+                      <Button type="submit">
+                        Send
+                      </Button>
                     </form>
+                }
+              </div>
+              <br/><br/>
+              <div className="sent-messages-box">
+                <h4>Message feed:</h4>
+                {this.props.sentMessagesIsLoading ?
+                  null : null
                 }
               </div>
             </div>
@@ -83,7 +93,9 @@ function mapStateToProps(state) {
   return {
     number: state.router.params.number,
     smsSending: state.rootReducer.sms.smsSending,
-    smsSent: state.rootReducer.sms.smsSent
+    smsSent: state.rootReducer.sms.smsSent,
+    sentMessagesIsLoading: state.rootReducer.sentMessages.sentMessagesIsLoading,
+    sentMessagesStore: state.rootReducer.sentMessages.sentMessagesStore
   }
 }
 

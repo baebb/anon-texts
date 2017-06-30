@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, FormGroup, FormControl, Button, Alert } from 'react-bootstrap';
+import { Row, Col, FormGroup, FormControl, Alert } from 'react-bootstrap';
 
 
 const MessageField = (props) => {
@@ -27,9 +27,6 @@ const MessageField = (props) => {
             </Alert>
             : null
         }
-        <Button type="submit">
-          Send
-        </Button>
       </FormGroup>
     </Col>
   </Row>
