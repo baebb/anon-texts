@@ -41,13 +41,15 @@ class Send extends React.Component {
   }
   
   render() {
+    const formattedNumber = this.props.number ? `${this.props.number.slice(0,4)} ${this.props.number.slice(4,7)} ${this.props.number.slice(7,10)}` : null;
+    
     return (
       <Grid>
         <Row>
           <Col xs={12} sm={6} smOffset={3}>
             <div className="text-center">
               <h2>Send sms to:</h2>
-              <h2>{this.props.number}</h2>
+              <h2>{formattedNumber}</h2>
               <br/><br/>
               <div className="send-box">
                 {this.props.smsSent ?
@@ -78,7 +80,14 @@ class Send extends React.Component {
               <div className="sent-messages-box">
                 <h4>Message feed:</h4>
                 {this.props.sentMessagesIsLoading ?
-                  null : null
+                  <p>
+                    <img src={LoadingGif} height="20px" />
+                  </p>
+                  :
+                  this.props.sentMessagesStore[`61${this.props.number.slice(1)}`] ?
+                    <p>messages found</p>
+                    :
+                    <p>No messages have been sent</p>
                 }
               </div>
             </div>
