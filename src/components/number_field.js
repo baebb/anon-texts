@@ -13,7 +13,7 @@ const NumberField = (props) => {
           <FormControl
             type="number"
             value={props.number}
-            placeholder="eg. 0416 032 684"
+            placeholder="eg. 415 570 4058"
             onChange={props.handleChange}
           />
           {/*<Phone*/}
@@ -31,12 +31,15 @@ const NumberField = (props) => {
               <p><strong>Bad number</strong></p>
               <p>Only 10-digit mobile numbers are supported</p>
             </Alert>
-            : props.error === 'BAD_NUMBER_CODE' ?
-              <Alert bsStyle="danger">
-                <p><strong>Bad number</strong></p>
-                <p>Only Australian mobile numbers starting with '04' are supported</p>
-              </Alert>
-              : null
+            :
+            null
+            // Australian number test
+            // props.error === 'BAD_NUMBER_CODE' ?
+            //   <Alert bsStyle="danger">
+            //     <p><strong>Bad number</strong></p>
+            //     <p>Only Australian mobile numbers starting with '04' are supported</p>
+            //   </Alert>
+            //   : null
           }
         </FormGroup>
       

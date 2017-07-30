@@ -1,4 +1,9 @@
-import { SENT_MESSAGES_RECEIVED, SENT_MESSAGES_ERROR, SENT_MESSAGES_EMPTY, SENT_MESSAGES_LOADING } from '../actions/index';
+import {
+  SENT_MESSAGES_RECEIVED,
+  SENT_MESSAGES_ERROR,
+  SENT_MESSAGES_EMPTY,
+  SENT_MESSAGES_LOADING
+} from '../actions/index';
 
 const INIT_STATE = { sentMessagesStore: {}, sentMessagesIsLoading: null };
 
@@ -18,10 +23,17 @@ export default function (state = INIT_STATE, action) {
         ...state,
         sentMessagesIsLoading: true
       };
-    // case SENT_MESSAGES_ERROR:
-    //   return {
-    //
-    //   };
+    case SENT_MESSAGES_EMPTY:
+      return {
+        ...state,
+        sentMessagesIsLoading: false,
+        sentMessagesStore: {
+          ...state.sentMessagesStore,
+          [action.payload.number]: action.payload.messages
+        }
+      };
+    case SENT_MESSAGES_ERROR:
+      return state;
     default:
       return state;
   }

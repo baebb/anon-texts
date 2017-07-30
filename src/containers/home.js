@@ -22,9 +22,12 @@ class Home extends React.Component {
     const { number } = this.state;
     if (number.length !== 10) {
       this.setState({ error: 'BAD_LENGTH', number: '' });
-    } else if (number.substring(0, 2) !== '04') {
-      this.setState({ error: 'BAD_NUMBER_CODE', number: '' });
-    } else {
+    }
+    //Australian number test
+    // else if (number.substring(0, 2) !== '04') {
+    //   this.setState({ error: 'BAD_NUMBER_CODE', number: '' });
+    // }
+    else {
       this.props.dispatch(navigateSend(number));
     }
   }
@@ -39,7 +42,7 @@ class Home extends React.Component {
         <Row>
           <Col xs={12} sm={6} smOffset={3}>
             <div className="text-center">
-              <h2>Send anonymous sms messages to anyone in Australia</h2>
+              <h2>Send anonymous sms messages to anyone in the USA</h2>
               <br/><br/>
               <form onSubmit={(e) => this.isValidNumber(e)}>
                 <NumberField
