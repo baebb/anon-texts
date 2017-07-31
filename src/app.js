@@ -10,7 +10,7 @@ class App extends React.Component {
     return (
       <Fragment forRoute='/'>
         <div className="App">
-          <h1 className="text-center title">anon texts</h1>
+          <h1 className="text-center title">anon<br/>texts</h1>
           <Fragment forRoute='/'><Home /></Fragment>
           <Fragment forRoute='/about'><About /></Fragment>
           <Fragment forRoute='/send'><Send /></Fragment>
