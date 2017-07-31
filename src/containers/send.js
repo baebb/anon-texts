@@ -47,7 +47,7 @@ class Send extends React.Component {
   }
   
   render() {
-    const formattedNumber = this.props.number ? `${this.props.number.slice(0,3)} ${this.props.number.slice(3,6)} ${this.props.number.slice(6,10)}` : null;
+    const formattedNumber = this.props.number ? `${this.props.number.slice(0, 3)} ${this.props.number.slice(3, 6)} ${this.props.number.slice(6, 10)}` : null;
     
     return (
       <Grid>
@@ -58,61 +58,66 @@ class Send extends React.Component {
               {this.props.numberCheckLoading ?
                 <Alert bsStyle="warning">
                   <p>
-                    <img src={LoadingGif} height="20px" />
+                    <img src={LoadingGif} height="20px"/>
                   </p>
                   <p>Checking number</p>
                 </Alert>
                 :
-                this.props.numberTypeStore[this.props.number] !== 'mobile' ?
+                this.props.numberCheckError ?
                   <Alert bsStyle="danger">
-                    <strong>Not a US mobile number</strong>
+                    <strong>Something broke! :( </strong>
                   </Alert>
                   :
-                  <div className="send-box">
-                    <h2>Send sms to:</h2>
-                    <h2>{formattedNumber}</h2>
-                    <br/><br/>
-                    {this.props.smsSent ?
-                      <Alert bsStyle="success">
-                        <strong>Message sent</strong>
-                      </Alert>
-                      : this.props.smsSending ?
-                        <Alert bsStyle="warning">
-                          <p>
-                            <img src={LoadingGif} height="20px" />
-                          </p>
-                          <p>Sending...</p>
+                  this.props.numberTypeStore[this.props.number] !== 'mobile' ?
+                    <Alert bsStyle="danger">
+                      <strong>Your provided number is not a US mobile number</strong>
+                    </Alert>
+                    :
+                    <div className="send-box">
+                      <h2>Send sms to:</h2>
+                      <h2>{formattedNumber}</h2>
+                      <br/><br/>
+                      {this.props.smsSent ?
+                        <Alert bsStyle="success">
+                          <strong>Message sent</strong>
                         </Alert>
-                        :
-                        <form onSubmit={(e) => this.isValidMessage(e)}>
-                          <MessageField
-                            messsage={this.state.message}
-                            handleChange={this.handleChange.bind(this)}
-                            error={this.state.error}
-                          />
-                          <Button type="submit">
-                            Send
-                          </Button>
-                        </form>
-                    }
-                  </div>
+                        : this.props.smsSending ?
+                          <Alert bsStyle="warning">
+                            <p>
+                              <img src={LoadingGif} height="20px"/>
+                            </p>
+                            <p>Sending...</p>
+                          </Alert>
+                          :
+                          <form onSubmit={(e) => this.isValidMessage(e)}>
+                            <MessageField
+                              messsage={this.state.message}
+                              handleChange={this.handleChange.bind(this)}
+                              error={this.state.error}
+                            />
+                            <Button type="submit">
+                              Send
+                            </Button>
+                          </form>
+                      }
+                    </div>
               }
               <br/><br/>
               {/*<div className="sent-messages-box">*/}
-                {/*<h4>Message feed:</h4>*/}
-                {/*{this.props.sentMessagesIsLoading ?*/}
-                  {/*<p>*/}
-                    {/*<img src={LoadingGif} height="20px" />*/}
-                  {/*</p>*/}
-                  {/*:*/}
-                  {/*this.props.sentMessagesStore[`61${this.props.number.slice(1)}`] ?*/}
-                    {/*<p>messages found</p>*/}
-                    {/*:*/}
-                    {/*<p>No messages have been sent</p>*/}
-                {/*}*/}
+              {/*<h4>Message feed:</h4>*/}
+              {/*{this.props.sentMessagesIsLoading ?*/}
+              {/*<p>*/}
+              {/*<img src={LoadingGif} height="20px" />*/}
+              {/*</p>*/}
+              {/*:*/}
+              {/*this.props.sentMessagesStore[`61${this.props.number.slice(1)}`] ?*/}
+              {/*<p>messages found</p>*/}
+              {/*:*/}
+              {/*<p>No messages have been sent</p>*/}
+              {/*}*/}
               {/*</div>*/}
               {/*<Link href="/">*/}
-                {/*<Button>Home</Button>*/}
+              {/*<Button>Home</Button>*/}
               {/*</Link>*/}
             </div>
           </Col>

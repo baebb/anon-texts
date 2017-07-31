@@ -27,7 +27,11 @@ export default function (state = INIT_STATE, action) {
         }
       };
     case CHECK_NUM_ERROR:
-      return state;
+      return {
+        ...state,
+        numberCheckLoading: false,
+        numberCheckError: true
+      };
     default:
       return state;
   }
