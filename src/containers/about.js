@@ -12,15 +12,11 @@ class About extends React.Component {
           <Col xs={12} sm={6} smOffset={3}>
             <div className="text-center">
               <h2>About</h2>
-              <br/><br/>
-              <p>This is a boilerplate that uses React, Redux and a few other useful goodies to help you to get started
-                on your next cool web app</p>
-              <p>See readme for more details and enjoy!</p>
+              <br/>
+              <p>I made this to mess with a friend</p>
+              <p>I hope you and your friends enjoy this as much as we did</p>
+              <br/>
               <p>:^)</p>
-              <br/><br/>
-              <Link href="/">
-                <Button>Home</Button>
-              </Link>
             </div>
           </Col>
         </Row>
