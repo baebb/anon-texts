@@ -14,7 +14,7 @@ const MessageField = (props) => {
           value={props.message}
           onChange={props.handleChange}
         />
-        <br/><br/>
+        <br/>
         {props.error === 'MESSAGE_SHORT' ?
           <Alert bsStyle="danger">
             <p><strong>Bad message</strong></p>

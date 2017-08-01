@@ -22,9 +22,9 @@ class Send extends React.Component {
   }
   
   componentDidMount() {
-    // if (!this.props.sentMessagesStore[this.props.number]) {
-    //   this.props.dispatch(getSentMessages(this.props.number));
-    // }
+    if (!this.props.sentMessagesStore[this.props.number]) {
+      this.props.dispatch(getSentMessages(this.props.number));
+    }
     if (!this.props.numberTypeStore[this.props.number]) {
       this.props.dispatch(checkNumber(this.props.number))
     }
@@ -76,7 +76,7 @@ class Send extends React.Component {
                     <div className="send-box">
                       <h2>Sending to:</h2>
                       <h2>{formattedNumber}</h2>
-                      <br/><br/>
+                      <br/>
                       {this.props.smsSent ?
                         <Alert bsStyle="success">
                           <strong>Message sent</strong>
@@ -95,7 +95,7 @@ class Send extends React.Component {
                               handleChange={this.handleChange.bind(this)}
                               error={this.state.error}
                             />
-                            <Button type="submit">
+                            <Button type="submit" bsSize="large">
                               Send
                             </Button>
                           </form>
@@ -103,22 +103,22 @@ class Send extends React.Component {
                     </div>
               }
               <br/><br/>
-              {/*<div className="sent-messages-box">*/}
-              {/*<h4>Message feed:</h4>*/}
-              {/*{this.props.sentMessagesIsLoading ?*/}
-              {/*<p>*/}
-              {/*<img src={LoadingGif} height="20px" />*/}
-              {/*</p>*/}
-              {/*:*/}
-              {/*this.props.sentMessagesStore[`61${this.props.number.slice(1)}`] ?*/}
-              {/*<p>messages found</p>*/}
-              {/*:*/}
-              {/*<p>No messages have been sent</p>*/}
-              {/*}*/}
-              {/*</div>*/}
-              {/*<Link href="/">*/}
-              {/*<Button>Home</Button>*/}
-              {/*</Link>*/}
+              <div className="sent-messages-box">
+                <h4>Message feed:</h4>
+                {this.props.sentMessagesIsLoading ?
+                  <p>
+                    <img src={LoadingGif} height="20px"/>
+                  </p>
+                  :
+                  this.props.sentMessagesStore[this.props.number] ?
+                    <p>messages found</p>
+                    :
+                    <p>No messages have been sent</p>
+                }
+              </div>
+              <Link href="/">
+                <Button>Home</Button>
+              </Link>
             </div>
           </Col>
         </Row>
