@@ -74,7 +74,7 @@ class Send extends React.Component {
                     </Alert>
                     :
                     <div className="send-box">
-                      <h2>Send sms to:</h2>
+                      <h2>Sending to:</h2>
                       <h2>{formattedNumber}</h2>
                       <br/><br/>
                       {this.props.smsSent ?

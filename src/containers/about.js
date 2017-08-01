@@ -11,7 +11,7 @@ class About extends React.Component {
         <Row>
           <Col xs={12} sm={6} smOffset={3}>
             <div className="text-center">
-              <h2>About</h2>
+              <h2>'wtf is this?'</h2>
               <br/>
               <p>I made this to mess with a friend</p>
               <p>I hope you and your friends enjoy this as much as we did</p>

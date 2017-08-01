@@ -42,8 +42,9 @@ class Home extends React.Component {
         <Row>
           <Col xs={12} sm={6} smOffset={3}>
             <div className="text-center">
-              <h2>Send anonymous sms messages to anyone in the USA</h2>
-              <br/><br/>
+              <h2>Blow up a friend's phone with anonymous sms messages
+              <br/>😜</h2>
+              <br/>
               <form onSubmit={(e) => this.isValidNumber(e)}>
                 <NumberField
                   number={this.state.number}
