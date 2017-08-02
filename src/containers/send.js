@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'redux-little-router';
-import { Grid, Row, Col, Button, Alert } from 'react-bootstrap';
+import { Grid, Row, Col, Button, Alert, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 // assets
 import LoadingGif from '../assets/gif/loading.gif';
@@ -42,6 +42,17 @@ class Send extends React.Component {
     }
   }
   
+  renderMessages(messageItem, index) {
+    let { sentMsg, timestamp } = messageItem;
+    let t = new Date(timestamp).toLocaleString('en-US').split(',');
+    // let formatedDate = t.format('dd.mm.yyyy hh:MM:ss');
+    return (
+      <ListGroupItem key={index} header={sentMsg}>
+        {t}
+      </ListGroupItem>
+    )
+  }
+  
   handleChange(e) {
     this.setState({ message: e.target.value, error: false });
   }
@@ -74,7 +85,7 @@ class Send extends React.Component {
                     </Alert>
                     :
                     <div className="send-box">
-                      <h2>Sending to:</h2>
+                      <h2>Sending to</h2>
                       <h2>{formattedNumber}</h2>
                       <br/>
                       {this.props.smsSent ?
@@ -104,16 +115,18 @@ class Send extends React.Component {
               }
               <br/><br/>
               <div className="sent-messages-box">
-                <h4>Message feed:</h4>
+                <h2>History</h2>
                 {this.props.sentMessagesIsLoading ?
                   <p>
                     <img src={LoadingGif} height="20px"/>
                   </p>
                   :
                   this.props.sentMessagesStore[this.props.number] ?
-                    <p>messages found</p>
+                    <ListGroup>
+                      {this.props.sentMessagesStore[this.props.number].map(this.renderMessages)}
+                    </ListGroup>
                     :
-                    <p>No messages have been sent</p>
+                    <p>No messages have been sent yet</p>
                 }
               </div>
               <Link href="/">
