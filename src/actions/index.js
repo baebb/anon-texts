@@ -39,10 +39,9 @@ export function sendError(props) {
 export function sendMessage(number, message) {
   const formattedNumber = `+1${number}`;
   // const formattedNumber = `+61${number.slice(1)}`; Australian numbers
-  const formattedMessage = `${message}\n| anon-texts.com`;
   const data = {
     to: formattedNumber,
-    message: formattedMessage
+    message: message
   };
   const url = `${SMS_LAMBDA_ROOT_URL}dev/send`;
   return (dispatch) => {
