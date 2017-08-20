@@ -114,21 +114,25 @@ class Send extends React.Component {
                     </div>
               }
               <br/><br/>
-              <div className="sent-messages-box">
-                <h2>History</h2>
-                {this.props.sentMessagesIsLoading ?
-                  <p>
-                    <img src={LoadingGif} height="20px"/>
-                  </p>
-                  :
-                  this.props.sentMessagesStore[this.props.number] ?
-                    <ListGroup>
-                      {this.props.sentMessagesStore[this.props.number].map(this.renderMessages)}
-                    </ListGroup>
+              {this.props.numberTypeStore[this.props.number] !== 'mobile' ?
+                null
+                :
+                <div className="sent-messages-box">
+                  <h2>History</h2>
+                  {this.props.sentMessagesIsLoading ?
+                    <p>
+                      <img src={LoadingGif} height="20px"/>
+                    </p>
                     :
-                    <p>No messages have been sent yet</p>
-                }
-              </div>
+                    this.props.sentMessagesStore[this.props.number] ?
+                      <ListGroup>
+                        {this.props.sentMessagesStore[this.props.number].map(this.renderMessages)}
+                      </ListGroup>
+                      :
+                      <p>No messages have been sent yet</p>
+                  }
+                </div>
+              }
               <Link href="/">
                 <Button>Home</Button>
               </Link>
