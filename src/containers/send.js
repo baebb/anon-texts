@@ -126,7 +126,9 @@ class Send extends React.Component {
                     :
                     this.props.sentMessagesStore[this.props.number] ?
                       <ListGroup>
-                        {this.props.sentMessagesStore[this.props.number].map(this.renderMessages)}
+                        {this.props.sentMessagesStore[this.props.number]
+                          .sort((a,b) => b.timestamp - a.timestamp)
+                          .map(this.renderMessages)}
                       </ListGroup>
                       :
                       <p>No messages have been sent yet</p>
