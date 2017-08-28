@@ -48,7 +48,8 @@ export function sendMessage(number, message) {
     dispatch({ type: SEND_LOADING });
     axios.post(url, data)
       .then((response) => {
-        dispatch({ type: SEND_SUCCESS })
+        dispatch({ type: SEND_SUCCESS });
+        dispatch(getSentMessages(number));
       })
       .catch((error) => {
         dispatch(sendError({ type: 'error', message: error }))
