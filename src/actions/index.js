@@ -5,6 +5,7 @@ export const
   SEND_LOADING = 'SEND_LOADING',
   SEND_ERROR = 'SEND_ERROR',
   SEND_SUCCESS = 'SEND_SUCCESS',
+  SEND_RESET = 'SEND_RESET',
   SENT_MESSAGES_LOADING = 'SENT_MESSAGES_LOADING',
   SENT_MESSAGES_ERROR = 'SENT_MESSAGES_ERROR',
   SENT_MESSAGES_EMPTY = 'SENT_MESSAGES_EMPTY',
@@ -54,6 +55,12 @@ export function sendMessage(number, message) {
       .catch((error) => {
         dispatch(sendError({ type: 'error', message: error }))
       });
+  }
+}
+
+export function resetSendSms() {
+  return {
+    type: SEND_RESET
   }
 }
 

@@ -1,4 +1,4 @@
-import { SEND_LOADING, SEND_SUCCESS, SEND_ERROR } from '../actions/index';
+import { SEND_LOADING, SEND_SUCCESS, SEND_ERROR, SEND_RESET } from '../actions/index';
 
 const INIT_STATE = {
   smsSent: false,
@@ -14,6 +14,8 @@ export default function (state = INIT_STATE, action) {
       return { ...state, smsSent: false, smsError: action.payload.message, smsSending: false };
     case SEND_LOADING:
       return { ...state, smsSending: true };
+    case SEND_RESET:
+      return { ...state, smsSent: false, smsError: null, smsSending: false };
     default:
       return state;
   }

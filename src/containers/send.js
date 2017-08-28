@@ -10,7 +10,7 @@ import LoadingGif from '../assets/gif/loading.gif';
 import MessageField from '../components/message_field';
 
 // actions
-import { sendMessage, getSentMessages, checkNumber } from '../actions/index';
+import { sendMessage, getSentMessages, checkNumber, resetSendSms } from '../actions/index';
 
 class Send extends React.Component {
   constructor(props) {
@@ -89,9 +89,14 @@ class Send extends React.Component {
                       <h2>{formattedNumber}</h2>
                       <br/>
                       {this.props.smsSent ?
-                        <Alert bsStyle="success">
-                          <strong>message sent</strong>
-                        </Alert>
+                        <div>
+                          <Alert bsStyle="success">
+                            <strong>message sent ✅</strong>
+                          </Alert>
+                          <Button onClick={() =>
+                            this.props.dispatch(resetSendSms())
+                          }>send another</Button>
+                        </div>
                         : this.props.smsSending ?
                           <Alert bsStyle="warning">
                             <p>
@@ -127,7 +132,7 @@ class Send extends React.Component {
                     this.props.sentMessagesStore[this.props.number] ?
                       <ListGroup>
                         {this.props.sentMessagesStore[this.props.number]
-                          .sort((a,b) => b.timestamp - a.timestamp)
+                          .sort((a, b) => b.timestamp - a.timestamp)
                           .map(this.renderMessages)}
                       </ListGroup>
                       :
