@@ -28,8 +28,8 @@ const NumberField = (props) => {
           <br/><br/>
           {props.error === 'BAD_LENGTH' ?
             <Alert bsStyle="danger">
-              <p><strong>Bad number</strong></p>
-              <p>Only 10-digit mobile numbers are supported</p>
+              <p><strong>bad number</strong></p>
+              <p>only 10-digit mobile numbers are supported</p>
             </Alert>
             :
             null

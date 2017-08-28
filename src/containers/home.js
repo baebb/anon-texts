@@ -42,8 +42,7 @@ class Home extends React.Component {
         <Row>
           <Col xs={12} sm={6} smOffset={3}>
             <div className="text-center">
-              <h2>Blow up a friend's phone with anonymous sms messages
-              <br/>😜</h2>
+              <h2>send anonymous<br/>texts to friends<br/><span className="spaceIt">😜</span></h2>
               <br/>
               <form onSubmit={(e) => this.isValidNumber(e)}>
                 <NumberField
@@ -52,7 +51,7 @@ class Home extends React.Component {
                   error={this.state.error}
                 />
                 <Button type="submit">
-                  Send a sms
+                  send a sms
                 </Button>
               </form>
             </div>

@@ -71,33 +71,33 @@ class Send extends React.Component {
                   <p>
                     <img src={LoadingGif} height="20px"/>
                   </p>
-                  <p>Checking number</p>
+                  <p>checking number</p>
                 </Alert>
                 :
                 this.props.numberCheckError ?
                   <Alert bsStyle="danger">
-                    <strong>Something broke! :( </strong>
+                    <strong>something broke :( </strong>
                   </Alert>
                   :
                   this.props.numberTypeStore[this.props.number] !== 'mobile' ?
                     <Alert bsStyle="danger">
-                      <strong>Your provided number is not a US mobile number</strong>
+                      <strong>the number you provided is not a US mobile number</strong>
                     </Alert>
                     :
                     <div className="send-box">
-                      <h2>Sending to</h2>
+                      <h2>sending to</h2>
                       <h2>{formattedNumber}</h2>
                       <br/>
                       {this.props.smsSent ?
                         <Alert bsStyle="success">
-                          <strong>Message sent</strong>
+                          <strong>message sent</strong>
                         </Alert>
                         : this.props.smsSending ?
                           <Alert bsStyle="warning">
                             <p>
                               <img src={LoadingGif} height="20px"/>
                             </p>
-                            <p>Sending...</p>
+                            <p>sending...</p>
                           </Alert>
                           :
                           <form onSubmit={(e) => this.isValidMessage(e)}>
@@ -107,7 +107,7 @@ class Send extends React.Component {
                               error={this.state.error}
                             />
                             <Button type="submit" bsSize="large">
-                              Send
+                              send
                             </Button>
                           </form>
                       }
@@ -118,7 +118,7 @@ class Send extends React.Component {
                 null
                 :
                 <div className="sent-messages-box">
-                  <h2>History</h2>
+                  <h2>message history</h2>
                   {this.props.sentMessagesIsLoading ?
                     <p>
                       <img src={LoadingGif} height="20px"/>
@@ -131,7 +131,7 @@ class Send extends React.Component {
                           .map(this.renderMessages)}
                       </ListGroup>
                       :
-                      <p>No messages have been sent yet</p>
+                      <p>no messages have been sent yet</p>
                   }
                 </div>
               }
