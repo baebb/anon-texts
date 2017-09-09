@@ -5,8 +5,6 @@ import { Provider } from 'react-redux';
 import configureStore from './store.js';
 import { initializeCurrentLocation } from 'redux-little-router';
 
-import './scss/app.scss';
-
 const store = configureStore();
 const initialLocation = store.getState().router;
 if (initialLocation) {

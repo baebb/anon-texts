@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Grid, Row, Col, Button } from 'react-bootstrap';
+import Select from 'react-select';
+import { get } from 'lodash'
 
 // components
 import NumberField from '../components/number_field';
@@ -8,10 +10,16 @@ import NumberField from '../components/number_field';
 // actions
 import { navigateSend } from '../actions/index';
 
+const countryOptions = [
+  { value: 'US', label: 'US' },
+  { value: 'AU', label: 'AU' }
+];
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      countryCode: 'US',
       number: '',
       error: ''
     }
@@ -32,8 +40,9 @@ class Home extends React.Component {
     }
   }
   
-  handleChange(e) {
-    this.setState({ number: e.target.value, error: '' });
+  handleChange(e, key) {
+    let value = get(e.target, 'value', e.value);
+    this.setState({ ...this.state, [key]: value });
   }
   
   render() {
@@ -45,11 +54,25 @@ class Home extends React.Component {
               <h2>send anonymous<br/>texts to friends<br/><span className="spaceIt">😜</span></h2>
               <br/>
               <form onSubmit={(e) => this.isValidNumber(e)}>
-                <NumberField
-                  number={this.state.number}
-                  handleChange={(e) => this.handleChange(e)}
-                  error={this.state.error}
-                />
+                <div className="number-wrapper">
+                  <div className="country-select">
+                    <Select
+                      name="countryCode"
+                      value={this.state.countryCode}
+                      options={countryOptions}
+                      onChange={(e) => this.handleChange(e, 'countryCode')}
+                      clearable={false}
+                      searchable={false}
+                    />
+                  </div>
+                  <div className="number-field">
+                    <NumberField
+                      number={this.state.number}
+                      handleChange={(e) => this.handleChange(e, 'number')}
+                      error={this.state.error}
+                    />
+                  </div>
+                </div>
                 <Button type="submit">
                   send a sms
                 </Button>
