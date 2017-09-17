@@ -11,8 +11,6 @@ styleLoaders:
   - css
   - sass
 
-extractStyles: false
-
 # Different settings for different environments can be used,
 # It depends on value of NODE_ENV environment variable
 env:
