@@ -66,7 +66,6 @@ export function resetSendSms() {
 
 export function getSentMessages(number) {
   const formattedNumber = `+1${number}`;
-  // const formattedNumber = `61${number.slice(1)}`; Australian numbers
   const url = `${SENT_MSGS_ROOT_URL}dev/sentMessages/${formattedNumber}`;
   return (dispatch) => {
     dispatch({ type: SENT_MESSAGES_LOADING });
@@ -95,8 +94,7 @@ export function getSentMessages(number) {
 }
 
 export function checkNumber(number) {
-  const formattedNumber = `+1${number}`;
-  const data = { number: formattedNumber };
+  const data = { number: number };
   const url = `${CHECK_NUM_ROOT_URL}dev/checknum`;
   return (dispatch) => {
     dispatch({ type: CHECK_NUM_LOADING });
@@ -106,7 +104,8 @@ export function checkNumber(number) {
           type: CHECK_NUM_RECEIVED,
           payload: {
             number: number,
-            type: response.data.type
+            type: response.data.type,
+            countryCode: response.data.countryCode
           }
         })
       })

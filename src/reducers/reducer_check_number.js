@@ -23,7 +23,10 @@ export default function (state = INIT_STATE, action) {
         numberCheckLoading: false,
         numberTypeStore: {
           ...state.numberTypeStore,
-          [action.payload.number]: action.payload.type
+          [action.payload.number]: {
+            type: action.payload.type,
+            countryCode: action.payload.countryCode
+          }
         }
       };
     case CHECK_NUM_ERROR:

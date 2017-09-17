@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'redux-little-router';
 import { Grid, Row, Col, Button, Alert, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { get } from 'lodash';
 
 // assets
 import LoadingGif from '../assets/gif/loading.gif';
@@ -45,7 +46,6 @@ class Send extends React.Component {
   renderMessages(messageItem, index) {
     let { sentMsg, timestamp } = messageItem;
     let t = new Date(timestamp).toLocaleString('en-US').split(',');
-    // let formatedDate = t.format('dd.mm.yyyy hh:MM:ss');
     return (
       <ListGroupItem key={index} header={sentMsg}>
         {t}
@@ -58,7 +58,15 @@ class Send extends React.Component {
   }
   
   render() {
-    const formattedNumber = this.props.number ? `${this.props.number.slice(0, 3)} ${this.props.number.slice(3, 6)} ${this.props.number.slice(6, 10)}` : null;
+    const { numberCheckLoading, numberCheckError, numberTypeStore, number } = this.props;
+    const numType = get(numberTypeStore[number], 'type', '');
+    const numberCountry = get(numberTypeStore[number], 'countryCode', '');
+    const formattedNumber = {
+      US: `${number.slice(0, 3)} ${number.slice(3, 6)} ${number.slice(6, 10)}`,
+      AU: `${number.slice(0, 4)} ${number.slice(4, 7)} ${number.slice(7, 10)}`,
+    };
+    
+    
     
     return (
       <Grid>
@@ -66,7 +74,7 @@ class Send extends React.Component {
           <Col xs={12} sm={6} smOffset={3}>
             <div className="text-center">
               <br/>
-              {this.props.numberCheckLoading ?
+              {numberCheckLoading ?
                 <Alert bsStyle="warning">
                   <p>
                     <img src={LoadingGif} height="20px"/>
@@ -74,19 +82,15 @@ class Send extends React.Component {
                   <p>checking number</p>
                 </Alert>
                 :
-                this.props.numberCheckError ?
+                numberCheckError ?
                   <Alert bsStyle="danger">
                     <strong>something broke :( </strong>
                   </Alert>
                   :
-                  this.props.numberTypeStore[this.props.number] !== 'mobile' ?
-                    <Alert bsStyle="danger">
-                      <strong>the number you provided is not a US mobile number</strong>
-                    </Alert>
-                    :
+                  (numType === 'mobile' || numType === 'voip') ?
                     <div className="send-box">
                       <h2>sending to</h2>
-                      <h2>{formattedNumber}</h2>
+                      <h2>{formattedNumber[numberCountry]}</h2>
                       <br/>
                       {this.props.smsSent ?
                         <div>
@@ -117,9 +121,13 @@ class Send extends React.Component {
                           </form>
                       }
                     </div>
+                    :
+                    <Alert bsStyle="danger">
+                      <strong>the number you provided is not a US mobile number</strong>
+                    </Alert>
               }
               <br/><br/>
-              {this.props.numberTypeStore[this.props.number] !== 'mobile' ?
+              {numberTypeStore[number] !== 'mobile' ?
                 null
                 :
                 <div className="sent-messages-box">
@@ -129,9 +137,9 @@ class Send extends React.Component {
                       <img src={LoadingGif} height="20px"/>
                     </p>
                     :
-                    this.props.sentMessagesStore[this.props.number] ?
+                    this.props.sentMessagesStore[number] ?
                       <ListGroup>
-                        {this.props.sentMessagesStore[this.props.number]
+                        {this.props.sentMessagesStore[number]
                           .sort((a, b) => b.timestamp - a.timestamp)
                           .map(this.renderMessages)}
                       </ListGroup>

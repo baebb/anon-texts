@@ -31,10 +31,6 @@ class Home extends React.Component {
     if (number.length !== 10) {
       this.setState({ error: 'BAD_LENGTH', number: '' });
     }
-    //Australian number test
-    // else if (number.substring(0, 2) !== '04') {
-    //   this.setState({ error: 'BAD_NUMBER_CODE', number: '' });
-    // }
     else {
       this.props.dispatch(navigateSend(number));
     }
