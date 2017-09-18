@@ -37,11 +37,10 @@ export function sendError(props) {
   }
 }
 
-export function sendMessage(number, message) {
-  const formattedNumber = `+1${number}`;
-  // const formattedNumber = `+61${number.slice(1)}`; Australian numbers
+export function sendMessage(number, numberCountry, message) {
   const data = {
-    to: formattedNumber,
+    to: number,
+    countryCode: numberCountry,
     message: message
   };
   const url = `${SMS_LAMBDA_ROOT_URL}dev/send`;
@@ -50,7 +49,7 @@ export function sendMessage(number, message) {
     axios.post(url, data)
       .then((response) => {
         dispatch({ type: SEND_SUCCESS });
-        dispatch(getSentMessages(number));
+        dispatch(getSentMessages(number, numberCountry));
       })
       .catch((error) => {
         dispatch(sendError({ type: 'error', message: error }))
@@ -64,8 +63,12 @@ export function resetSendSms() {
   }
 }
 
-export function getSentMessages(number) {
-  const formattedNumber = `+1${number}`;
+export function getSentMessages(number, countryCode) {
+  const numberPrefix = {
+    US: '+1',
+    AU: '+61'
+  };
+  const formattedNumber = numberPrefix[countryCode] + number;
   const url = `${SENT_MSGS_ROOT_URL}dev/sentMessages/${formattedNumber}`;
   return (dispatch) => {
     dispatch({ type: SENT_MESSAGES_LOADING });
@@ -107,7 +110,8 @@ export function checkNumber(number) {
             type: response.data.type,
             countryCode: response.data.countryCode
           }
-        })
+        });
+        dispatch(getSentMessages(number, response.data.countryCode))
       })
       .catch((error) => {
         console.log(error);

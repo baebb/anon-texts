@@ -23,9 +23,6 @@ class Send extends React.Component {
   }
   
   componentDidMount() {
-    if (!this.props.sentMessagesStore[this.props.number]) {
-      this.props.dispatch(getSentMessages(this.props.number));
-    }
     if (!this.props.numberTypeStore[this.props.number]) {
       this.props.dispatch(checkNumber(this.props.number))
     }
@@ -39,7 +36,9 @@ class Send extends React.Component {
     } else if (message.length > 140) {
       this.setState({ error: 'MESSAGE_LONG' });
     } else {
-      this.props.dispatch(sendMessage(this.props.number, message));
+      const { numberTypeStore, number } = this.props;
+      const numberCountry = get(numberTypeStore[number], 'countryCode');
+      this.props.dispatch(sendMessage(this.props.number, numberCountry, message));
     }
   }
   
@@ -65,8 +64,6 @@ class Send extends React.Component {
       US: `${number.slice(0, 3)} ${number.slice(3, 6)} ${number.slice(6, 10)}`,
       AU: `${number.slice(0, 4)} ${number.slice(4, 7)} ${number.slice(7, 10)}`,
     };
-    
-    
     
     return (
       <Grid>
@@ -127,9 +124,7 @@ class Send extends React.Component {
                     </Alert>
               }
               <br/><br/>
-              {numberTypeStore[number] !== 'mobile' ?
-                null
-                :
+              {(numType === 'mobile' || numType === 'voip') ?
                 <div className="sent-messages-box">
                   <h2>message history</h2>
                   {this.props.sentMessagesIsLoading ?
@@ -147,6 +142,8 @@ class Send extends React.Component {
                       <p>no messages have been sent yet</p>
                   }
                 </div>
+                :
+                null
               }
               <Link href="/">
                 <Button>Home</Button>
