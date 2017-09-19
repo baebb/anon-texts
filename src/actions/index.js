@@ -15,7 +15,9 @@ export const
   CHECK_NUM_RECEIVED = 'CHECK_NUM_RECEIVED';
 
 const
-  SMS_LAMBDA_ROOT_URL = 'https://sor59zy6f2.execute-api.us-east-1.amazonaws.com/',
+  SMS_LAMBDA_URL = process.env.NODE_ENV === 'production' ?
+    'https://nd2zxjm99d.execute-api.us-east-1.amazonaws.com/production/send'
+    : 'https://j8ofs9zn42.execute-api.us-east-1.amazonaws.com/dev/send',
   SENT_MSGS_ROOT_URL = 'https://becqd6a376.execute-api.us-east-1.amazonaws.com/',
   CHECK_NUM_ROOT_URL = 'https://gxddywvm69.execute-api.us-east-1.amazonaws.com/';
 
@@ -43,10 +45,9 @@ export function sendMessage(number, numberCountry, message) {
     countryCode: numberCountry,
     message: message
   };
-  const url = `${SMS_LAMBDA_ROOT_URL}dev/send`;
   return (dispatch) => {
     dispatch({ type: SEND_LOADING });
-    axios.post(url, data)
+    axios.post(SMS_LAMBDA_URL, data)
       .then((response) => {
         dispatch({ type: SEND_SUCCESS });
         dispatch(getSentMessages(number, numberCountry));
