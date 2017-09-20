@@ -35,3 +35,14 @@ jobs:
 
       # run tests!
       # run: yarn run test or not
+
+      - run: yarn run build:production
+
+      - deploy:
+          name: Deploy to S3 if branch is Master
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              aws s3 sync ./build s3://anon-texts-site-prod --delete
+            else
+              echo "Not deploying"
+            fi
