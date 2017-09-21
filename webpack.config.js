@@ -79,7 +79,7 @@ if (nodeEnv == 'production') {
       debug: false
     }),
     new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
+      sourceMap: false,
       comments: false,
       compress: {
         screw_ie8: true,
@@ -133,14 +133,13 @@ if (nodeEnv == 'production') {
 }
 
 module.exports = {
-  devtool: nodeEnv == 'production' ? 'source-map' : 'eval',
+  devtool: nodeEnv == 'production' ? 'cheap-module-source-map' : 'eval',
   entry: [
     'bootstrap-loader', './src/index.js'
   ],
   output: {
     path: buildPath,
     publicPath: '/',
-    sourceMapFilename: '[file]-[hash].map',
     filename: 'bundle-[hash].js'
   },
   module: {
