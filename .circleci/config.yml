@@ -44,7 +44,7 @@ jobs:
           name: Deploy to S3 if branch is Master
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              aws s3 sync ./build s3://anon-texts-site-prod --delete
+              aws s3 rm s3://anon-texts-site-prod --recursive && aws s3 sync ./build s3://anon-texts-site-prod --exclude "*.js"  && aws s3 cp --content-type "text/html; charset=utf-8" ./build s3://anon-texts-site-prod --recursive --exclude "*" --include "*.js"
             else
               echo "Not deploying"
             fi
