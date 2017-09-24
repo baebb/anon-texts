@@ -57,9 +57,17 @@ class Send extends React.Component {
   }
   
   render() {
-    const { numberCheckLoading, numberCheckError, numberTypeStore, number } = this.props;
+    const {
+      numberCheckLoading,
+      numberCheckError,
+      numberTypeStore,
+      number,
+      sentMessagesStore,
+      sentMessagesIsLoading
+    } = this.props;
     const numType = get(numberTypeStore[number], 'type', '');
     const numberCountry = get(numberTypeStore[number], 'countryCode', '');
+    const messageStore = get(sentMessagesStore, number, '');
     const formattedNumber = {
       US: `${number.slice(0, 3)} ${number.slice(3, 6)} ${number.slice(6, 10)}`,
       AU: `${number.slice(0, 4)} ${number.slice(4, 7)} ${number.slice(7, 10)}`,
@@ -127,14 +135,14 @@ class Send extends React.Component {
               {(numType === 'mobile' || numType === 'voip') ?
                 <div className="sent-messages-box">
                   <h2>message history</h2>
-                  {this.props.sentMessagesIsLoading ?
+                  {sentMessagesIsLoading ?
                     <p>
                       <img src={LoadingGif} height="20px"/>
                     </p>
                     :
-                    this.props.sentMessagesStore[number] ?
+                    messageStore.length  ?
                       <ListGroup>
-                        {this.props.sentMessagesStore[number]
+                        {messageStore
                           .sort((a, b) => b.timestamp - a.timestamp)
                           .map(this.renderMessages)}
                       </ListGroup>
