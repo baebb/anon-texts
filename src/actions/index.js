@@ -18,8 +18,12 @@ const
   SMS_LAMBDA_URL = process.env.NODE_ENV === 'production' ?
     'https://nd2zxjm99d.execute-api.us-east-1.amazonaws.com/production/send'
     : 'https://j8ofs9zn42.execute-api.us-east-1.amazonaws.com/dev/send',
-  SENT_MSGS_ROOT_URL = 'https://becqd6a376.execute-api.us-east-1.amazonaws.com/',
-  CHECK_NUM_ROOT_URL = 'https://gxddywvm69.execute-api.us-east-1.amazonaws.com/';
+  SENT_MSGS_ROOT_URL = process.env.NODE_ENV === 'production' ?
+    'https://i0ygrrinsd.execute-api.us-east-1.amazonaws.com/production/sentMessages'
+    : 'https://becqd6a376.execute-api.us-east-1.amazonaws.com/dev/sentMessages',
+  CHECK_NUM_ROOT_URL = process.env.NODE_ENV === 'production' ?
+    'https://5guz53jgo0.execute-api.us-east-1.amazonaws.com/production/checknum'
+    :'https://4kwcmmkub7.execute-api.us-east-1.amazonaws.com/dev/checknum';
 
 
 export function navigateSend(number) {
@@ -70,7 +74,7 @@ export function getSentMessages(number, countryCode) {
     AU: '+61'
   };
   const formattedNumber = numberPrefix[countryCode] + number;
-  const url = `${SENT_MSGS_ROOT_URL}dev/sentMessages/${formattedNumber}`;
+  const url = `${SENT_MSGS_ROOT_URL}/${formattedNumber}`;
   return (dispatch) => {
     dispatch({ type: SENT_MESSAGES_LOADING });
     axios.get(url)
@@ -99,10 +103,9 @@ export function getSentMessages(number, countryCode) {
 
 export function checkNumber(number) {
   const data = { number: number };
-  const url = `${CHECK_NUM_ROOT_URL}dev/checknum`;
   return (dispatch) => {
     dispatch({ type: CHECK_NUM_LOADING });
-    axios.post(url, data)
+    axios.post(CHECK_NUM_ROOT_URL, data)
       .then((response) => {
         dispatch({
           type: CHECK_NUM_RECEIVED,
