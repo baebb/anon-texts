@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'redux-little-router';
 import { Grid, Row, Col, Button, Alert, ListGroup, ListGroupItem } from 'react-bootstrap';
-import { get } from 'lodash';
+import _ from 'lodash';
 
 // assets
 import LoadingGif from '../assets/gif/loading.gif';
@@ -37,7 +37,7 @@ class Send extends React.Component {
       this.setState({ error: 'MESSAGE_LONG' });
     } else {
       const { numberTypeStore, number } = this.props;
-      const numberCountry = get(numberTypeStore[number], 'countryCode');
+      const numberCountry = _.get(numberTypeStore[number], 'countryCode');
       this.props.dispatch(sendMessage(this.props.number, numberCountry, message));
     }
   }
@@ -65,9 +65,9 @@ class Send extends React.Component {
       sentMessagesStore,
       sentMessagesIsLoading
     } = this.props;
-    const numType = get(numberTypeStore[number], 'type', '');
-    const numberCountry = get(numberTypeStore[number], 'countryCode', '');
-    const messageStore = get(sentMessagesStore, number, '');
+    const numType = _.get(numberTypeStore[number], 'type', '');
+    const numberCountry = _.get(numberTypeStore[number], 'countryCode', '');
+    const messageStore = _.get(sentMessagesStore, number, '');
     const formattedNumber = {
       US: `${number.slice(0, 3)} ${number.slice(3, 6)} ${number.slice(6, 10)}`,
       AU: `${number.slice(0, 4)} ${number.slice(4, 7)} ${number.slice(7, 10)}`,
