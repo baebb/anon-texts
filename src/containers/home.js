@@ -69,6 +69,7 @@ class Home extends React.Component {
                     />
                   </div>
                 </div>
+                <br/>
                 <Button type="submit">
                   send a sms
                 </Button>
