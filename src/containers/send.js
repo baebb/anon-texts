@@ -23,6 +23,7 @@ class Send extends React.Component {
   }
   
   componentDidMount() {
+    this.props.dispatch(resetSendSms());
     if (!this.props.numberTypeStore[this.props.number]) {
       this.props.dispatch(checkNumber(this.props.number))
     }
