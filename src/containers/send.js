@@ -11,24 +11,24 @@ import LoadingGif from '../assets/gif/loading.gif';
 import MessageField from '../components/message_field';
 
 // actions
-import { sendMessage, getSentMessages, checkNumber, resetSendSms } from '../actions/index';
+import { sendMessage, checkNumber, resetSendSms } from '../actions/index';
 
 class Send extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       message: '',
-      error: ''
-    }
+      error: '',
+    };
   }
-  
+
   componentDidMount() {
     this.props.dispatch(resetSendSms());
     if (!this.props.numberTypeStore[this.props.number]) {
-      this.props.dispatch(checkNumber(this.props.number))
+      this.props.dispatch(checkNumber(this.props.number));
     }
   }
-  
+
   isValidMessage(e) {
     e.preventDefault();
     const { message } = this.state;
@@ -42,117 +42,148 @@ class Send extends React.Component {
       this.props.dispatch(sendMessage(this.props.number, numberCountry, message));
     }
   }
-  
+
   renderMessages(messageItem, index) {
-    let { sentMsg, timestamp } = messageItem;
-    let t = new Date(timestamp).toLocaleString('en-US').split(',');
+    const { sentMsg, timestamp } = messageItem;
+    const isReply = _.get(messageItem, 'isReply', false);
+    const t = new Date(timestamp).toLocaleString('en-US').split(',');
     return (
       <ListGroupItem key={index} header={sentMsg}>
         {t}
       </ListGroupItem>
-    )
+    );
   }
-  
+
   handleChange(e) {
     this.setState({ message: e.target.value, error: false });
   }
-  
-  render() {
+
+  displaySendMessage() {
     const {
       numberCheckLoading,
       numberCheckError,
       numberTypeStore,
       number,
-      sentMessagesStore,
-      sentMessagesIsLoading
+      smsSent,
+      smsSending,
     } = this.props;
+
     const numType = _.get(numberTypeStore[number], 'type', '');
     const numberCountry = _.get(numberTypeStore[number], 'countryCode', '');
-    const messageStore = _.get(sentMessagesStore, number, '');
     const formattedNumber = {
       US: `${number.slice(0, 3)} ${number.slice(3, 6)} ${number.slice(6, 10)}`,
       AU: `${number.slice(0, 4)} ${number.slice(4, 7)} ${number.slice(7, 10)}`,
     };
-    
+
+    if (numberCheckLoading) {
+      return (
+        <Alert bsStyle="warning">
+          <p>
+            <img src={LoadingGif} height="20px"/>
+          </p>
+          <p>checking number</p>
+        </Alert>
+      );
+    }
+
+    if (numberCheckError) {
+      return (
+        <Alert bsStyle="danger">
+          <strong>something broke :( </strong>
+        </Alert>
+      );
+    }
+
+    const displayMessageBox = () => {
+      if (smsSent) {
+        return (
+          <div>
+            <Alert bsStyle="success">
+              <strong>message sent ✅</strong>
+            </Alert>
+            <Button onClick={() => this.props.dispatch(resetSendSms())}>
+              send another
+            </Button>
+          </div>
+        );
+      }
+      if (smsSending) {
+        return (
+          <Alert bsStyle="warning">
+            <p>
+              <img src={LoadingGif} height="20px"/>
+            </p>
+            <p>sending...</p>
+          </Alert>
+        );
+      }
+      return (
+        <form onSubmit={(e) => this.isValidMessage(e)}>
+          <MessageField
+            messsage={this.state.message}
+            handleChange={this.handleChange.bind(this)}
+            error={this.state.error}
+          />
+          <Button type="submit" bsSize="large">
+            send
+          </Button>
+        </form>
+      );
+    };
+
+    if (numType === 'mobile' || numType === 'voip') {
+      return (
+        <div className="send-box">
+          <h2>sending to</h2>
+          <h2>{formattedNumber[numberCountry]}</h2>
+          <br/>
+          {displayMessageBox()}
+        </div>
+      );
+    }
+
+    return (
+      <Alert bsStyle="danger">
+        <strong>The number you provided is not a valid US or AU mobile number</strong>
+      </Alert>
+    );
+  }
+
+  render() {
+    const {
+      numberTypeStore,
+      number,
+      sentMessagesStore,
+      sentMessagesIsLoading,
+    } = this.props;
+    const numType = _.get(numberTypeStore[number], 'type', '');
+    const messageStore = _.get(sentMessagesStore, number, '');
+
     return (
       <Grid>
         <Row>
           <Col xs={12} sm={6} smOffset={3}>
             <div className="text-center">
               <br/>
-              {numberCheckLoading ?
-                <Alert bsStyle="warning">
+              {this.displaySendMessage()}
+              <br/><br/>
+              {(numType === 'mobile' || numType === 'voip') ?
+               <div className="sent-messages-box">
+                 <h2>message history</h2>
+                 {sentMessagesIsLoading ?
                   <p>
                     <img src={LoadingGif} height="20px"/>
                   </p>
-                  <p>checking number</p>
-                </Alert>
-                :
-                numberCheckError ?
-                  <Alert bsStyle="danger">
-                    <strong>something broke :( </strong>
-                  </Alert>
-                  :
-                  (numType === 'mobile' || numType === 'voip') ?
-                    <div className="send-box">
-                      <h2>sending to</h2>
-                      <h2>{formattedNumber[numberCountry]}</h2>
-                      <br/>
-                      {this.props.smsSent ?
-                        <div>
-                          <Alert bsStyle="success">
-                            <strong>message sent ✅</strong>
-                          </Alert>
-                          <Button onClick={() =>
-                            this.props.dispatch(resetSendSms())
-                          }>send another</Button>
-                        </div>
-                        : this.props.smsSending ?
-                          <Alert bsStyle="warning">
-                            <p>
-                              <img src={LoadingGif} height="20px"/>
-                            </p>
-                            <p>sending...</p>
-                          </Alert>
-                          :
-                          <form onSubmit={(e) => this.isValidMessage(e)}>
-                            <MessageField
-                              messsage={this.state.message}
-                              handleChange={this.handleChange.bind(this)}
-                              error={this.state.error}
-                            />
-                            <Button type="submit" bsSize="large">
-                              send
-                            </Button>
-                          </form>
-                      }
-                    </div>
-                    :
-                    <Alert bsStyle="danger">
-                      <strong>the number you provided is not a US mobile number</strong>
-                    </Alert>
-              }
-              <br/><br/>
-              {(numType === 'mobile' || numType === 'voip') ?
-                <div className="sent-messages-box">
-                  <h2>message history</h2>
-                  {sentMessagesIsLoading ?
-                    <p>
-                      <img src={LoadingGif} height="20px"/>
-                    </p>
-                    :
-                    messageStore.length  ?
-                      <ListGroup>
-                        {messageStore
-                          .sort((a, b) => b.timestamp - a.timestamp)
-                          .map(this.renderMessages)}
-                      </ListGroup>
-                      :
-                      <p>no messages have been sent yet</p>
-                  }
-                </div>
-                :
-                null
+                   : messageStore.length ?
+                     <ListGroup>
+                       {messageStore
+                         .sort((a, b) => b.timestamp - a.timestamp)
+                         .map(this.renderMessages)}
+                     </ListGroup>
+                    : <p>no messages have been sent yet</p>
+                 }
+               </div>
+                : null
               }
               <Link href="/">
                 <Button>Home</Button>
@@ -161,7 +192,7 @@ class Send extends React.Component {
           </Col>
         </Row>
       </Grid>
-    )
+    );
   }
 }
 
@@ -174,9 +205,8 @@ function mapStateToProps(state) {
     sentMessagesStore: state.rootReducer.sentMessages.sentMessagesStore,
     numberCheckLoading: state.rootReducer.numberType.numberCheckLoading,
     numberTypeStore: state.rootReducer.numberType.numberTypeStore,
-    numberCheckError: state.rootReducer.numberType.numberCheckError
-  }
+    numberCheckError: state.rootReducer.numberType.numberCheckError,
+  };
 }
-
 
 export default connect(mapStateToProps, null)(Send);
