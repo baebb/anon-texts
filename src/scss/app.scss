@@ -1,5 +1,13 @@
 @import '~react-select/dist/react-select.css';
 
+body {
+  background-color: black;
+}
+
+h1, h2, h3, h4, h5, h6, p, span, .h1, .h2, .h3, .h4, .h5, .h6 {
+  color: white;
+}
+
 .title {
   color: black;
   text-decoration: none;
@@ -17,6 +25,7 @@
 }
 
 .list-group-item {
+  background-color: #000;
   border: none;
 }
 
@@ -57,6 +66,74 @@ input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
 input[type="number"] {
   -moz-appearance: textfield;
+}
+
+// blackening
+.Select {
+  .Select-control {
+    background-color: black;
+    border-color: white;
+    .Select-value-label {
+      color: white !important;
+    }
+  }
+  .Select-menu-outer {
+    background-color: black;
+    border-color: white;
+  }
+  &.is-open {
+    .Select-control {
+      background-color: black;
+      border-color: white;
+    }
+  }
+  .Select-option {
+    background-color: black;
+    color: white;
+    &.is-selected {
+      background-color: black;
+      color: white;
+      border-color: white;
+    }
+    &.is-focused {
+      background-color: white;
+      color: black;
+    }
+  }
+}
+
+.form-control {
+  color: white;
+  background-color: black;
+  border-color: white;
+}
+
+.btn-default {
+  color: white;
+  background-color: black;
+  border-color: white;
+  &:hover, &:active, &:focus  {
+    color: black;
+    background-color: white;
+    border-color: black;
+  }
+}
+
+.alert {
+  margin-bottom: 0;
+  margin-top: 10px;
+
+  &.alert-danger {
+    background-color: black;
+    border-color: red;
+    color: white;
+  }
+  &.alert-warning {
+    background-color: black;
+    border-color: yellow;
+    color: white;
+  }
 }
