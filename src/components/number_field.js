@@ -1,11 +1,15 @@
 import React from 'react';
 import { FormGroup, FormControl, Alert } from 'react-bootstrap';
 
+const formatNumber = (number) => {
+
+}
+
 const NumberField = (props) => {
   return (
     <FormGroup>
       <FormControl
-        type="number"
+        type="tel"
         value={props.number}
         placeholder="eg. 415 570 4058"
         onChange={props.handleChange}

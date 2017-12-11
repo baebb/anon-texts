@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Grid, Row, Col, Button } from 'react-bootstrap';
 import Select from 'react-select';
-import { get } from 'lodash'
+import _ from 'lodash'
 
 // components
 import NumberField from '../components/number_field';
@@ -28,16 +28,17 @@ class Home extends React.Component {
   isValidNumber(e) {
     e.preventDefault();
     const { number } = this.state;
-    if (number.length !== 10) {
+    const formattedNum = number.replace(/ /g,'');
+    if (formattedNum.length !== 10) {
       this.setState({ error: 'BAD_LENGTH', number: '' });
     }
     else {
-      this.props.dispatch(navigateSend(number));
+      this.props.dispatch(navigateSend(formattedNum));
     }
   }
   
   handleChange(e, key) {
-    let value = get(e.target, 'value', e.value);
+    let value = _.get(e.target, 'value', e.value);
     this.setState({ ...this.state, [key]: value });
   }
   
@@ -71,7 +72,7 @@ class Home extends React.Component {
                 </div>
                 <br/>
                 <Button type="submit">
-                  send a sms
+                  send text
                 </Button>
               </form>
             </div>
