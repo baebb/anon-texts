@@ -39,7 +39,12 @@ class Home extends React.Component {
   
   handleChange(e, key) {
     let value = _.get(e.target, 'value', e.value);
-    this.setState({ ...this.state, [key]: value });
+    if (key == 'number') {
+      const formattedNum = value.replace(/ /g,'');
+      this.setState({ ...this.state, [key]: formattedNum })
+    } else {
+      this.setState({ ...this.state, [key]: value });
+    }
   }
   
   render() {
@@ -65,6 +70,7 @@ class Home extends React.Component {
                   <div className="number-field">
                     <NumberField
                       number={this.state.number}
+                      countryCode={this.state.countryCode}
                       handleChange={(e) => this.handleChange(e, 'number')}
                       error={this.state.error}
                     />
