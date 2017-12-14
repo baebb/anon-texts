@@ -109,6 +109,11 @@ input[type="number"] {
   color: white;
   background-color: black;
   border-color: white;
+  &:focus {
+    border-color: dodgerblue;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+  }
 }
 
 .btn-default {
@@ -116,14 +121,16 @@ input[type="number"] {
   background-color: black;
   border-color: white;
   &:hover, &:active, &:focus  {
-    color: black;
-    background-color: white;
-    border-color: black;
+    color: white;
+    background-color: black;
+    border-color: dodgerblue;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    outline: 0 none;
   }
 }
 
 .alert {
-  margin-bottom: 0;
   margin-top: 10px;
 
   &.alert-danger {
@@ -135,5 +142,16 @@ input[type="number"] {
     background-color: black;
     border-color: yellow;
     color: white;
+  }
+  &.alert-success {
+    background-color: black;
+    border-color: green;
+    color: white;
+  }
+  &.alert-mb-0 {
+    margin-bottom: 0;
+  }
+  &.alert-mt-0 {
+    margin-top: 0;
   }
 }

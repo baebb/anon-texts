@@ -37,29 +37,11 @@ const NumberField = (props) => {
         onChange={props.handleChange}
         maxLength="12"
       />
-      {/*<Phone*/}
-      {/*placeholder="eg. 0416 032 684"*/}
-      {/*country={'AU'}*/}
-      {/*countries={['AU']}*/}
-      {/*value={props.number}*/}
-      {/*showCountrySelect={true}*/}
-      {/*onChange={props.handleChange}*/}
-      {/*className=""*/}
-      {/*/>*/}
-      {props.error === 'BAD_LENGTH' ?
-        <Alert bsStyle="danger">
+      {props.error === 'BAD_LENGTH' &&
+        <Alert bsStyle="danger" className="alert-mb-0">
           <p><strong>bad number</strong></p>
           <p>only 10-digit mobile numbers are supported</p>
         </Alert>
-        :
-        null
-        // Australian number test
-        // props.error === 'BAD_NUMBER_CODE' ?
-        //   <Alert bsStyle="danger">
-        //     <p><strong>Bad number</strong></p>
-        //     <p>Only Australian mobile numbers starting with '04' are supported</p>
-        //   </Alert>
-        //   : null
       }
     </FormGroup>
   )

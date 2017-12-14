@@ -98,8 +98,8 @@ class Send extends React.Component {
       if (smsSent) {
         return (
           <div>
-            <Alert bsStyle="success">
-              <strong>message sent ✅</strong>
+            <Alert bsStyle="success" className="alert-mt-0">
+              <strong>message sent</strong>
             </Alert>
             <Button onClick={() => this.props.dispatch(resetSendSms())}>
               send another
