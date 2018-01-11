@@ -21,14 +21,14 @@ class Send extends React.Component {
       error: '',
     };
   }
-
+  
   componentDidMount() {
     this.props.dispatch(resetSendSms());
     if (!this.props.numberTypeStore[this.props.number]) {
       this.props.dispatch(checkNumber(this.props.number));
     }
   }
-
+  
   isValidMessage(e) {
     e.preventDefault();
     const { message } = this.state;
@@ -42,22 +42,29 @@ class Send extends React.Component {
       this.props.dispatch(sendMessage(this.props.number, numberCountry, message));
     }
   }
-
+  
   renderMessages(messageItem, index) {
     const { sentMsg, timestamp } = messageItem;
     const isReply = _.get(messageItem, 'isReply', false);
-    const t = new Date(timestamp).toLocaleString('en-US').split(',');
+    const options = {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    };
+    const t = new Date(timestamp).toLocaleString('en-US', options).split(',');
     return (
       <ListGroupItem key={index} header={sentMsg}>
-        {t}
+        <small>{t}</small>
       </ListGroupItem>
     );
   }
-
+  
   handleChange(e) {
     this.setState({ message: e.target.value, error: false });
   }
-
+  
   displaySendMessage() {
     const {
       numberCheckLoading,
@@ -67,14 +74,14 @@ class Send extends React.Component {
       smsSent,
       smsSending,
     } = this.props;
-
+    
     const numType = _.get(numberTypeStore[number], 'type', '');
     const numberCountry = _.get(numberTypeStore[number], 'countryCode', '');
     const formattedNumber = {
       US: `${number.slice(0, 3)} ${number.slice(3, 6)} ${number.slice(6, 10)}`,
       AU: `${number.slice(0, 4)} ${number.slice(4, 7)} ${number.slice(7, 10)}`,
     };
-
+    
     if (numberCheckLoading) {
       return (
         <Alert bsStyle="warning">
@@ -85,7 +92,7 @@ class Send extends React.Component {
         </Alert>
       );
     }
-
+    
     if (numberCheckError) {
       return (
         <Alert bsStyle="danger">
@@ -93,7 +100,7 @@ class Send extends React.Component {
         </Alert>
       );
     }
-
+    
     const displayMessageBox = () => {
       if (smsSent) {
         return (
@@ -130,7 +137,7 @@ class Send extends React.Component {
         </form>
       );
     };
-
+    
     if (numType === 'mobile' || numType === 'voip') {
       return (
         <div className="send-box">
@@ -141,14 +148,14 @@ class Send extends React.Component {
         </div>
       );
     }
-
+    
     return (
       <Alert bsStyle="danger">
         <strong>The number you provided is not a valid US or AU mobile number</strong>
       </Alert>
     );
   }
-
+  
   render() {
     const {
       numberTypeStore,
@@ -158,7 +165,7 @@ class Send extends React.Component {
     } = this.props;
     const numType = _.get(numberTypeStore[number], 'type', '');
     const messageStore = _.get(sentMessagesStore, number, '');
-
+    
     return (
       <Grid>
         <Row>
@@ -168,21 +175,21 @@ class Send extends React.Component {
               {this.displaySendMessage()}
               <br/><br/>
               {(numType === 'mobile' || numType === 'voip') ?
-               <div className="sent-messages-box">
-                 <h2>message history</h2>
-                 {sentMessagesIsLoading ?
-                  <p>
-                    <img src={LoadingGif} height="20px"/>
-                  </p>
-                   : messageStore.length ?
-                     <ListGroup>
-                       {messageStore
-                         .sort((a, b) => b.timestamp - a.timestamp)
-                         .map(this.renderMessages)}
-                     </ListGroup>
-                    : <p>no messages have been sent yet</p>
-                 }
-               </div>
+                <div className="sent-messages-box">
+                  <h2>message history</h2>
+                  {sentMessagesIsLoading ?
+                    <p>
+                      <img src={LoadingGif} height="20px"/>
+                    </p>
+                    : messageStore.length ?
+                      <ListGroup>
+                        {messageStore
+                          .sort((a, b) => b.timestamp - a.timestamp)
+                          .map(this.renderMessages)}
+                      </ListGroup>
+                      : <p>no messages have been sent yet</p>
+                  }
+                </div>
                 : null
               }
               <Link href="/">
