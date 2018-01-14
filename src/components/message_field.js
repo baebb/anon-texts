@@ -17,13 +17,13 @@ const MessageField = (props) => {
         <br/>
         {props.error === 'MESSAGE_SHORT' ?
           <Alert bsStyle="danger">
-            <p><strong>bad message</strong></p>
-            <p>messages must be more than 10 characters (incl. spaces)</p>
+            <p><strong>message too short</strong></p>
+            <p>messages must be more than 0 characters in length</p>
           </Alert>
           : props.error === 'MESSAGE_LONG' ?
             <Alert bsStyle="danger">
-              <p><strong>bad message</strong></p>
-              <p>messages must be less than 140 characters (incl. spaces)</p>
+              <p><strong>message too long</strong></p>
+              <p>messages must be less than 140 characters in length (including spaces)</p>
             </Alert>
             : null
         }

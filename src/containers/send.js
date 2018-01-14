@@ -32,14 +32,15 @@ class Send extends React.Component {
   isValidMessage(e) {
     e.preventDefault();
     const { message } = this.state;
-    if (message.length < 10) {
+    const { numberTypeStore, number } = this.props;
+    const numberCountry = _.get(numberTypeStore[number], 'countryCode');
+    
+    if (message === '') {
       this.setState({ error: 'MESSAGE_SHORT' });
     } else if (message.length > 140) {
       this.setState({ error: 'MESSAGE_LONG' });
     } else {
-      const { numberTypeStore, number } = this.props;
-      const numberCountry = _.get(numberTypeStore[number], 'countryCode');
-      this.props.dispatch(sendMessage(this.props.number, numberCountry, message));
+      this.props.dispatch(sendMessage(number, numberCountry, message));
     }
   }
   
