@@ -66,14 +66,57 @@ class Send extends React.Component {
     this.setState({ message: e.target.value, error: false });
   }
   
+  
+  displayMessageBox () {
+    const {
+      smsSent,
+      smsSending,
+    } = this.props;
+    
+    if (smsSent) {
+      return (
+        <div>
+          <Alert bsStyle="success" className="alert-mt-0">
+            <strong>message sent</strong>
+          </Alert>
+          <Button onClick={() => this.props.dispatch(resetSendSms())}>
+            send another
+          </Button>
+        </div>
+      );
+    }
+    
+    if (smsSending) {
+      return (
+        <Alert bsStyle="warning">
+          <p>
+            <img src={LoadingGif} height="20px"/>
+          </p>
+          <p>sending...</p>
+        </Alert>
+      );
+    }
+    
+    return (
+      <form onSubmit={(e) => this.isValidMessage(e)}>
+        <MessageField
+          messsage={this.state.message}
+          handleChange={this.handleChange.bind(this)}
+          error={this.state.error}
+        />
+        <Button type="submit" bsSize="large">
+          send
+        </Button>
+      </form>
+    );
+  };
+  
   displaySendMessage() {
     const {
       numberCheckLoading,
       numberCheckError,
       numberTypeStore,
       number,
-      smsSent,
-      smsSending,
     } = this.props;
     
     const numType = _.get(numberTypeStore[number], 'type', '');
@@ -102,50 +145,13 @@ class Send extends React.Component {
       );
     }
     
-    const displayMessageBox = () => {
-      if (smsSent) {
-        return (
-          <div>
-            <Alert bsStyle="success" className="alert-mt-0">
-              <strong>message sent</strong>
-            </Alert>
-            <Button onClick={() => this.props.dispatch(resetSendSms())}>
-              send another
-            </Button>
-          </div>
-        );
-      }
-      if (smsSending) {
-        return (
-          <Alert bsStyle="warning">
-            <p>
-              <img src={LoadingGif} height="20px"/>
-            </p>
-            <p>sending...</p>
-          </Alert>
-        );
-      }
-      return (
-        <form onSubmit={(e) => this.isValidMessage(e)}>
-          <MessageField
-            messsage={this.state.message}
-            handleChange={this.handleChange.bind(this)}
-            error={this.state.error}
-          />
-          <Button type="submit" bsSize="large">
-            send
-          </Button>
-        </form>
-      );
-    };
-    
     if (numType === 'mobile' || numType === 'voip') {
       return (
         <div className="send-box">
           <h2>sending to</h2>
           <h2>{formattedNumber[numberCountry]}</h2>
           <br/>
-          {displayMessageBox()}
+          {this.displayMessageBox()}
         </div>
       );
     }
