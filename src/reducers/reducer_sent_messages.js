@@ -5,7 +5,7 @@ import {
   SENT_MESSAGES_LOADING
 } from '../actions/index';
 
-const INIT_STATE = { sentMessagesStore: {}, sentMessagesIsLoading: null };
+const INIT_STATE = { sentMessagesStore: {}, sentMessagesIsLoading: null, sentMessagesError: null };
 
 export default function (state = INIT_STATE, action) {
   switch (action.type) {
@@ -13,6 +13,7 @@ export default function (state = INIT_STATE, action) {
       return {
         ...state,
         sentMessagesIsLoading: false,
+        sentMessagesError: false,
         sentMessagesStore: {
           ...state.sentMessagesStore,
           [action.payload.number]: action.payload.messages
@@ -21,19 +22,25 @@ export default function (state = INIT_STATE, action) {
     case SENT_MESSAGES_LOADING:
       return {
         ...state,
-        sentMessagesIsLoading: true
+        sentMessagesIsLoading: true,
+        sentMessagesError: null
       };
     case SENT_MESSAGES_EMPTY:
       return {
         ...state,
         sentMessagesIsLoading: false,
+        sentMessagesError: false,
         sentMessagesStore: {
           ...state.sentMessagesStore,
           [action.payload.number]: action.payload.messages
         }
       };
     case SENT_MESSAGES_ERROR:
-      return state;
+      return {
+        ...state,
+        sentMessagesIsLoading: false,
+        sentMessagesError: true
+      };
     default:
       return state;
   }

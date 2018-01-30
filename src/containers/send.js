@@ -67,7 +67,7 @@ class Send extends React.Component {
   }
   
   
-  displayMessageBox () {
+  displayMessageBox() {
     const {
       smsSent,
       smsSending,
@@ -111,6 +111,37 @@ class Send extends React.Component {
     );
   };
   
+  displayMessageHistory() {
+    const {
+      number,
+      sentMessagesStore,
+      sentMessagesIsLoading,
+    } = this.props;
+    const messageStore = _.get(sentMessagesStore, number, '');
+    
+    if (sentMessagesIsLoading) {
+      return (
+        <p>
+          <img src={LoadingGif} height="20px"/>
+        </p>
+      )
+    }
+    
+    if (messageStore.length) {
+      return (
+        <ListGroup>
+          {messageStore
+            .sort((a, b) => b.timestamp - a.timestamp)
+            .map(this.renderMessages)}
+        </ListGroup>
+      )
+    }
+    
+    return (
+      <p>no messages have been sent yet</p>
+    )
+  }
+  
   displaySendMessage() {
     const {
       numberCheckLoading,
@@ -152,6 +183,11 @@ class Send extends React.Component {
           <h2>{formattedNumber[numberCountry]}</h2>
           <br/>
           {this.displayMessageBox()}
+          <br/><br/>
+          <div className="sent-messages-box">
+            <h2>message history</h2>
+            {this.displayMessageHistory()}
+          </div>
         </div>
       );
     }
@@ -164,15 +200,6 @@ class Send extends React.Component {
   }
   
   render() {
-    const {
-      numberTypeStore,
-      number,
-      sentMessagesStore,
-      sentMessagesIsLoading,
-    } = this.props;
-    const numType = _.get(numberTypeStore[number], 'type', '');
-    const messageStore = _.get(sentMessagesStore, number, '');
-    
     return (
       <Grid>
         <Row>
@@ -180,25 +207,6 @@ class Send extends React.Component {
             <div className="text-center">
               <br/>
               {this.displaySendMessage()}
-              <br/><br/>
-              {(numType === 'mobile' || numType === 'voip') ?
-                <div className="sent-messages-box">
-                  <h2>message history</h2>
-                  {sentMessagesIsLoading ?
-                    <p>
-                      <img src={LoadingGif} height="20px"/>
-                    </p>
-                    : messageStore.length ?
-                      <ListGroup>
-                        {messageStore
-                          .sort((a, b) => b.timestamp - a.timestamp)
-                          .map(this.renderMessages)}
-                      </ListGroup>
-                      : <p>no messages have been sent yet</p>
-                  }
-                </div>
-                : null
-              }
               <Link href="/">
                 <Button>Home</Button>
               </Link>
